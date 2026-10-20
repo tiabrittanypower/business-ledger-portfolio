@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Business Ledger — wireframe</title>
+    <style>
+      :root {
+        --bg: #eceae6;
+        --ink: #222;
+        --muted: #5a5a5a;
+        --line: #2a2a2a;
+        --fill: #f7f6f3;
+        --dash: #9a9a9a;
+        --dash-soft: #c8c8c8;
+        --call: #1f4d7a;
+        --phone: #111;
+        --space-4: 4px;
+        --space-8: 8px;
+        --space-12: 12px;
+        --space-16: 16px;
+        --space-24: 24px;
+        --space-32: 32px;
+        --space-40: 40px;
+        --space-48: 48px;
+        --space-64: 64px;
+        --space-80: 80px;
+        --space-96: 96px;
+        --s8: var(--space-8);
+        --s16: var(--space-16);
+        --s24: var(--space-24);
+        --side: var(--space-24);
+        --tap: var(--space-48);
+        --tap-min: var(--space-48);
+        --gap: var(--space-8);
+        --section-gap: var(--space-24);
+        --radius: var(--space-8);
+        --nav-h: var(--space-48);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font: 16px/1.4 "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      .page {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: var(--section-gap) var(--side) var(--space-64);
+      }
+      @media (max-width: 599px) {
+        .page { padding: var(--space-16) var(--space-16) var(--space-64); }
+      }
+      h1 { margin: 0 0 var(--space-8); font-size: 1.6rem; font-weight: 800; }
+      .lede { margin: 0 0 var(--space-16); color: var(--muted); max-width: 70ch; font-size: 14px; }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap);
+        margin-bottom: var(--section-gap);
+      }
+      .toolbar button {
+        min-height: var(--tap);
+        min-width: var(--tap-min);
+        padding: 0 var(--space-16);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+      .toolbar button.is-on {
+        background: var(--ink);
+        color: #fff;
+      }
+      .toolbar a {
+        min-height: var(--tap);
+        display: inline-flex;
+        align-items: center;
+        padding: 0 var(--space-16);
+        border: 1px dashed var(--dash);
+        border-radius: var(--radius);
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .board {
+        display: none;
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        gap: var(--space-32);
+      }
+      .board.is-on { display: grid; }
+      .focus {
+        display: none;
+        gap: var(--space-32);
+        align-items: start;
+      }
+      .focus.is-on { display: grid; }
+      @media (min-width: 1100px) {
+        .focus.is-on { grid-template-columns: minmax(720px, 1fr) 320px; }
+      }
+      .desk {
+        width: 1080px;
+        max-width: 100%;
+        margin: 0 auto;
+        background: #fff;
+        border: 2px solid var(--phone);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 12px 0 rgba(0,0,0,0.06);
+      }
+      .chrome {
+        height: 28px;
+        background: #e4e4e4;
+        color: var(--muted);
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .chrome i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: #fff;
+        display: block;
+      }
+      .chrome .url {
+        flex: 1;
+        min-width: 0;
+        height: 16px;
+        border: 1px solid var(--dash);
+        border-radius: 8px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        min-height: 520px;
+        background: var(--fill);
+      }
+      .side {
+        background: #e8e6e1;
+        border-right: 1px solid var(--line);
+        padding: var(--space-16);
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+      }
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+        margin-bottom: var(--space-16);
+      }
+      .mark {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .brand-row strong { display: block; font-size: 13px; }
+      .brand-row small { color: var(--muted); font-size: 11px; }
+      .biz-switch {
+        border: 1px solid var(--dash);
+        background: #fff;
+        border-radius: var(--radius);
+        padding: var(--space-8) var(--space-16);
+        margin-bottom: var(--space-16);
+        min-height: var(--tap);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--space-4);
+      }
+      .biz-switch span { display: block; color: var(--muted); font-size: 11px; font-weight: 700; }
+      .nav-label {
+        display: block;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: var(--space-16) 0 var(--space-8);
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .side .nav-item {
+        display: flex;
+        align-items: center;
+        min-height: var(--tap);
+        padding: 0 var(--space-16);
+        border: 1px solid transparent;
+        border-radius: var(--radius);
+        margin-bottom: var(--space-8);
+      }
+      .side .nav-item.on {
+        background: #fff;
+        border-color: var(--line);
+        font-weight: 700;
+      }
+      .vat-note {
+        margin-top: var(--space-16);
+        padding-top: var(--space-16);
+        border-top: 1px dashed var(--dash-soft);
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .main-col { min-width: 0; display: flex; flex-direction: column; }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: var(--space-16);
+        padding: var(--space-16) var(--space-24);
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .topbar strong {
+        display: block;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-top: var(--space-4);
+      }
+      .topbar .micro {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .top-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-8);
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .period-wrap {
+        display: grid;
+        gap: var(--space-4);
+      }
+      .ghost {
+        border: 1px solid var(--dash);
+        border-radius: var(--radius);
+        min-height: var(--tap);
+        padding: 0 var(--space-16);
+        display: inline-flex;
+        align-items: center;
+        font-size: 12px;
+        background: #fff;
+        white-space: nowrap;
+      }
+      .body {
+        flex: 1;
+        padding: var(--space-24) var(--space-32);
+        font-size: 12px;
+      }
+      @media (max-width: 599px) {
+        .body { padding: var(--space-16); }
+      }
+      .box {
+        border: 1px solid var(--line);
+        padding: var(--space-24);
+        margin-bottom: var(--space-24);
+        background: #fff;
+        position: relative;
+        border-radius: var(--radius);
+        container-type: inline-size;
+        container-name: card;
+      }
+      .box:last-child { margin-bottom: 0; }
+      .box h3, .panel-head h3 {
+        margin: 0;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 800;
+      }
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-8);
+        margin-bottom: var(--space-16);
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--s8);
+        min-height: var(--tap);
+        padding: var(--space-8) 0;
+        border-top: 1px dashed var(--dash-soft);
+        font-variant-numeric: tabular-nums;
+      }
+      .row:first-of-type { border-top: 0; }
+      .n {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--call);
+        color: #fff;
+        font-size: 12px;
+        display: grid;
+        place-items: center;
+        z-index: 1;
+      }
+      .callouts { background: #fff; border: 1px solid var(--line); padding: var(--space-16); border-radius: var(--radius); }
+      .callouts h2 { margin: 0 0 var(--gap); font-size: 1.15rem; font-weight: 800; }
+      .callouts ol { margin: 0; padding-left: var(--section-gap); }
+      .callouts li { margin: 0 0 var(--gap); }
+      .screen-label {
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 0 0 var(--space-8);
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .muted { color: var(--muted); font-weight: 400; }
+      .helper {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 400;
+        margin: 0 0 var(--space-16);
+        line-height: 1.45;
+      }
+
+      /* Persistent labels + 48px controls */
+      .fl {
+        display: grid;
+        gap: var(--space-4);
+        min-width: 0;
+        align-content: start;
+      }
+      .fl-name {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+      }
+      .control {
+        border: 1px solid var(--line);
+        min-height: var(--tap);
+        padding: 0 var(--space-16);
+        color: var(--ink);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        background: #fff;
+        width: 100%;
+      }
+      .control .ex { color: var(--muted); }
+      .control.area {
+        min-height: var(--space-80);
+        align-items: flex-start;
+        padding: var(--space-12) var(--space-16);
+      }
+
+      /* Clusters: internal 8–12, separation 24, shared left keyline */
+      .cluster {
+        display: grid;
+        gap: var(--space-8);
+        margin: 0 0 var(--space-24);
+      }
+      .cluster:last-of-type { margin-bottom: 0; }
+      .form-stack > .cluster:last-of-type { margin-bottom: var(--space-24); }
+      .cluster-row {
+        display: grid;
+        gap: var(--space-8) var(--space-12);
+        align-items: start;
+      }
+      .cluster-row.cols-1 { grid-template-columns: 1fr; }
+      .cluster-row.cols-2,
+      .cluster-row.cols-3 {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .btn {
+        border: 1px solid var(--line);
+        min-height: var(--tap);
+        padding: 0 var(--space-16);
+        text-align: center;
+        font-weight: 700;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        background: #fff;
+      }
+      .btn.fill { background: var(--ink); color: #fff; border-color: var(--ink); }
+      .cta {
+        width: 100%;
+        margin: 0;
+      }
+      .btns { display: flex; gap: var(--space-8); flex-wrap: wrap; }
+      .btns .btn, .btns .ghost { flex: 1; min-width: 96px; }
+
+      .grid2, .grid3, .grid4, .grid6 {
+        display: grid;
+        gap: var(--space-16);
+        margin-bottom: var(--space-24);
+      }
+      .grid2 { grid-template-columns: 1fr 1fr; }
+      .grid3 { grid-template-columns: 1fr 1fr 1fr; }
+      .grid4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+      .grid6 { grid-template-columns: repeat(6, 1fr); }
+      .tile {
+        border: 1px solid transparent;
+        background: var(--fill);
+        border-radius: var(--radius);
+        padding: var(--space-24);
+        min-height: var(--space-80);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--space-8);
+      }
+      .tile span {
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .tile strong { display: block; font-size: 18px; font-variant-numeric: tabular-nums; font-weight: 800; }
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        gap: var(--space-24);
+        align-items: start;
+        margin-bottom: var(--space-24);
+      }
+      .split:last-child { margin-bottom: 0; }
+      .split > .box { margin-bottom: 0; }
+      .hero-h {
+        margin: 0 0 var(--space-8);
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 var(--space-8);
+        font-weight: 800;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: var(--space-24);
+        border: 1px solid var(--dash-soft);
+        border-radius: 999px;
+        padding: 0 var(--space-8);
+        font-size: 10px;
+        color: var(--muted);
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .mini {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .mini th, .mini td {
+        text-align: left;
+        padding: var(--space-12) var(--space-16);
+        border-bottom: 1px solid var(--dash-soft);
+        vertical-align: middle;
+        height: var(--space-40);
+      }
+      .mini th {
+        color: var(--ink);
+        font-weight: 800;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        background: #efeeea;
+        white-space: nowrap;
+      }
+      .mini .num { text-align: right; white-space: nowrap; }
+      .mini tbody tr { height: var(--space-48); }
+      .table-scroll { overflow-x: auto; }
+
+      .todo-cols {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-16);
+        align-items: stretch;
+      }
+      .todo-cols .box {
+        margin-bottom: 0;
+        min-height: 100%;
+        padding: var(--space-16) var(--space-24);
+        display: flex;
+        flex-direction: column;
+      }
+      .kanban {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-16);
+        align-items: stretch;
+      }
+      .col {
+        border: 1px dashed var(--dash-soft);
+        border-radius: var(--radius);
+        padding: var(--space-16);
+        min-height: var(--space-96);
+        background: var(--fill);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+      .col b {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin: 0 0 var(--space-8);
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: var(--radius);
+        padding: var(--space-16);
+        font-size: 12px;
+        margin: 0;
+      }
+      .card .row { min-height: var(--space-32); padding: var(--space-4) 0; }
+      .chk {
+        width: var(--space-16);
+        height: var(--space-16);
+        border: 1px solid var(--line);
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: var(--space-8);
+        flex-shrink: 0;
+      }
+      .mock {
+        border: 1px dashed var(--dash-soft);
+        border-radius: var(--radius);
+        min-height: var(--space-80);
+        padding: var(--space-24);
+        background: var(--fill);
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: var(--space-16);
+      }
+      .empty-state {
+        border: 1px dashed var(--dash-soft);
+        background: var(--fill);
+        padding: var(--space-24);
+        border-radius: var(--radius);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-8);
+      }
+      .empty-state strong { font-size: 13px; }
+      .empty-state .meta { color: var(--muted); font-size: 11px; }
+      .empty-state .value {
+        font-size: 16px;
+        font-variant-numeric: tabular-nums;
+        font-weight: 800;
+      }
+      .col .empty-state {
+        border: 0;
+        background: transparent;
+        padding: var(--space-8) 0 0;
+        flex: 1;
+      }
+      .alert {
+        border: 1px dashed var(--dash-soft);
+        border-radius: var(--radius);
+        padding: var(--space-16) var(--space-24);
+        margin-bottom: var(--space-24);
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        gap: var(--space-16);
+        align-items: center;
+        position: relative;
+      }
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-24);
+      }
+      .settings-grid .box { margin-bottom: 0; }
+
+      .board .shell { grid-template-columns: 132px 1fr; min-height: 0; }
+      .board .body { padding: var(--space-16); font-size: 11px; }
+      .board .split,
+      .board .grid3,
+      .board .grid4,
+      .board .grid6,
+      .board .todo-cols,
+      .board .kanban,
+      .board .settings-grid { grid-template-columns: 1fr 1fr; }
+      .board .cluster { margin-bottom: var(--space-16); }
+      #screen-tabs button { font-size: 13px; padding: 0 var(--space-16); }
+
+      @page { size: A4 landscape; margin: 10mm; }
+      @media print {
+        .toolbar { display: none !important; }
+        .focus { display: none !important; }
+        .board { display: grid !important; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+        body { background: #fff; }
+        .page { max-width: none; padding: 0; }
+        .desk { box-shadow: none; width: 100%; }
+        .shell { min-height: 0; }
+        .lede { display: none; }
+        h1 { font-size: 1rem; }
+        .body { padding: 8px; font-size: 9px; }
+        .side .nav-item, .ghost, .control, .btn { min-height: 24px; }
+        .cluster { margin-bottom: 8px; }
+        .box { padding: 8px; margin-bottom: 8px; }
+        .tile, .empty-state, .card { padding: 8px; }
+      }
+
+      @media (max-width: 1023px) {
+        .split { grid-template-columns: 1fr; }
+        .grid4 { grid-template-columns: 1fr 1fr; }
+        .grid6 { grid-template-columns: 1fr 1fr 1fr; }
+        .todo-cols { grid-template-columns: 1fr; }
+        .kanban { grid-template-columns: 1fr 1fr; }
+        .settings-grid { grid-template-columns: 1fr; }
+        .page { padding-left: var(--space-24); padding-right: var(--space-24); }
+      }
+      @media (max-width: 720px) {
+        .shell, .board .shell { grid-template-columns: 1fr; }
+        .side { border-right: 0; border-bottom: 1px solid var(--line); }
+        .topbar { flex-direction: column; align-items: stretch; }
+        .top-actions { justify-content: stretch; }
+        .ghost, .period-wrap, .period-wrap .ghost { width: 100%; }
+      }
+      @media (max-width: 599px) {
+        .grid2, .grid3, .grid4, .grid6,
+        .kanban, .todo-cols, .settings-grid,
+        .board .split, .board .grid3, .board .grid4,
+        .board .grid6, .board .todo-cols, .board .kanban,
+        .board .settings-grid { grid-template-columns: 1fr; }
+        .page { padding-left: var(--space-16); padding-right: var(--space-16); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Business Ledger — wireframe</h1>
+      <p class="lede">
+        Layout only. Boxes and labels show what sits on each desktop view.
+        This is not the live app and not live books. Grey on purpose so we can agree structure.
+        Private finance tool — amounts are placeholders (R 0). Left side-nav, not a phone PWA.
+      </p>
+      <div class="toolbar">
+        <button type="button" id="btn-focus" class="is-on">One screen</button>
+        <button type="button" id="btn-board">All 11 screens</button>
+        <a href="../../index.html">Open live app</a>
+      </div>
+
+      <div class="focus is-on" id="focus">
+        <div>
+          <div class="toolbar" id="screen-tabs"></div>
+          <div id="frame-host"></div>
+        </div>
+        <aside class="callouts" id="callouts"></aside>
+      </div>
+
+      <div class="board" id="board"></div>
+    </div>
+
+    <script>
+      const NAV_BOOKS = [
+        ["dashboard", "Dashboard"],
+        ["transactions", "Money In / Out"],
+        ["invoices", "Invoices"],
+        ["todos", "Checklists"],
+        ["reports", "Reports"],
+        ["settings", "Settings"]
+      ];
+      const NAV_TOOLS = [
+        ["quotes", "Quotes"],
+        ["projects", "Web Projects"],
+        ["orders", "Orders"],
+        ["suppliers", "Suppliers"],
+        ["assets", "NSR Listings"]
+      ];
+      const ORDER = [
+        "dashboard", "transactions", "invoices", "todos", "reports", "settings",
+        "quotes", "projects", "orders", "suppliers", "assets"
+      ];
+      const TAB_LABEL = Object.fromEntries([...NAV_BOOKS, ...NAV_TOOLS]);
+
+      function field(name, example) {
+        const inner = example ? `<span class="ex">${example}</span>` : "";
+        return `<label class="fl"><span class="fl-name">${name}</span><span class="control">${inner}</span></label>`;
+      }
+      function area(name, example) {
+        const inner = example ? `<span class="ex">${example}</span>` : "";
+        return `<label class="fl"><span class="fl-name">${name}</span><span class="control area">${inner}</span></label>`;
+      }
+      function cluster(items, cols) {
+        const n = cols || items.length || 1;
+        return `<div class="cluster"><div class="cluster-row cols-${n}">${items.join("")}</div></div>`;
+      }
+      function cta(label) {
+        return `<div class="btn fill cta">${label}</div>`;
+      }
+      function emptyState(title, meta, value) {
+        return `<div class="empty-state"><strong>${title}</strong>${meta ? `<span class="meta">${meta}</span>` : ""}${value ? `<span class="value">${value}</span>` : ""}</div>`;
+      }
+
+      function navItems(list, active) {
+        return list.map(([k, label]) =>
+          `<span class="nav-item ${k === active ? "on" : ""}">${label}</span>`
+        ).join("");
+      }
+
+      function sideHtml(active) {
+        return `
+          <aside class="side">
+            <div class="brand-row">
+              <span class="mark">BL</span>
+              <div><strong>Business Ledger</strong><small>Private books</small></div>
+            </div>
+            <div class="biz-switch">
+              <span>Business</span>
+              <strong>All businesses</strong>
+            </div>
+            <span class="nav-label">Books</span>
+            ${navItems(NAV_BOOKS, active)}
+            <span class="nav-label">Business tools</span>
+            ${navItems(NAV_TOOLS, active)}
+            <div class="vat-note"><strong>No VAT added</strong><br>Non-VAT registered. Export backups regularly.</div>
+          </aside>`;
+      }
+
+      function topHtml(title) {
+        return `
+          <header class="topbar">
+            <div>
+              <span class="micro">South Africa tax year: 1 Mar to 28/29 Feb</span>
+              <strong>${title}</strong>
+            </div>
+            <div class="top-actions">
+              <label class="period-wrap">
+                <span class="micro">Period</span>
+                <span class="ghost">This month ▾</span>
+              </label>
+              <span class="ghost">Export backup</span>
+              <span class="ghost">Import backup</span>
+            </div>
+          </header>`;
+      }
+
+      const SCREENS = {
+        dashboard: {
+          title: "Dashboard",
+          hash: "dashboard",
+          purpose: "Books overview for every side business: profit, cash movement, and what still needs attention.",
+          notes: [
+            "Hero (Books overview): keep the books for every side business; net profit, income, expenses for the selected period (R 0 until used).",
+            "Four metric chips: unpaid invoices, unpaid amount, money records, open quotes — equal height, 16px gutters.",
+            "Business Snapshot and Recent Money Records share one starting column; 24px gap; empty records use a dashed sample card.",
+            "Power Designs Web marketing to-dos sit here and on Checklists — same list. Rows are 48px tall.",
+            "Month-end NSR listings banner only when due; Review listings is a 48px control.",
+            "Chrome: BL brand, Business filter, Books + Business tools, SA tax year, Period + Export + Import at 48px with 8px gaps."
+          ],
+          html: `
+            <div class="alert"><span class="n">5</span>
+              <div><strong>Nervous System Reset monthly check-in</strong><div class="helper" style="margin:4px 0 0">Month-end only · Review listings</div></div>
+              <span class="ghost">Review listings</span>
+            </div>
+            <div class="box"><span class="n">1</span>
+              <p class="eyebrow">Books overview</p>
+              <h2 class="hero-h">Keep the books for every side business in one place.</h2>
+              <p class="helper">Filter by business and period. Operational tools stay in the side-nav.</p>
+              <div class="grid3" style="margin-bottom:0">
+                <div class="tile"><span>Net profit</span><strong>R 0</strong></div>
+                <div class="tile"><span>Income</span><strong>R 0</strong></div>
+                <div class="tile"><span>Expenses</span><strong>R 0</strong></div>
+              </div>
+            </div>
+            <div class="grid4">
+              <div class="tile"><span>Unpaid invoices</span><strong>0</strong></div>
+              <div class="tile"><span>Unpaid amount</span><strong>R 0</strong></div>
+              <div class="tile"><span>Money records</span><strong>0</strong></div>
+              <div class="tile"><span>Open quotes</span><strong>0</strong></div>
+            </div>
+            <div class="split">
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Business Snapshot</h3><span class="ghost">Reports</span></div>
+                <div class="row"><span>Power Designs Web</span><span>R 0</span></div>
+                <div class="row"><span>Power Designs Apps</span><span>R 0</span></div>
+                <div class="row"><span>Sunday Bakery</span><span>R 0</span></div>
+                <div class="row"><span>Nervous System Reset</span><span>R 0</span></div>
+                <div class="row"><span>Custom Note Book Project</span><span>R 0</span></div>
+              </div>
+              <div class="box"><span class="n">3</span>
+                <div class="panel-head"><h3>Recent Money Records</h3><span class="ghost">Add money record</span></div>
+                ${emptyState("No money records", "This period", "R 0")}
+              </div>
+            </div>
+            <div class="box"><span class="n">4</span>
+              <div class="panel-head">
+                <h3>Power Designs Web · Marketing to-dos</h3>
+                <span class="ghost">All checklists</span>
+              </div>
+              <p class="helper">Daily / weekly / monthly ops. Tick here or in Checklists — same list.</p>
+              <div class="row"><span><i class="chk"></i>Marketplace daily check</span><span class="pill">Daily</span></div>
+              <div class="row"><span><i class="chk"></i>Reply inbox (same day)</span><span class="pill">Daily</span></div>
+              <div class="row"><span><i class="chk"></i>Value comments in Facebook groups</span><span class="pill">Daily</span></div>
+            </div>`
+        },
+        transactions: {
+          title: "Money In / Out",
+          hash: "transactions",
+          purpose: "Add income or expense records, attach a receipt, search the table, export CSV.",
+          notes: [
+            "Persistent labels above every field. Clusters: Business + Type + Date; Amount + Category + Paid via; Description; receipt file.",
+            "Save record is the sole primary CTA — 48px and full width, same left edge as labels.",
+            "List tools: Type filter and Search have visible labels; Export CSV is 48px.",
+            "Table: Date, Business, Type, Category, Description, Amount. Header row heavier; no mid-word truncation.",
+            "Empty table uses a dashed sample treatment. No live bookkeeping — placeholders only."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Add Income or Expense</h3><span class="ghost">Cancel edit</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "All businesses ▾"), field("Type", "Income ▾"), field("Date", "YYYY-MM-DD")], 3)}
+                  ${cluster([field("Amount", "R 0.00"), field("Category", "Website design income ▾"), field("Paid by / received via", "Bank, cash, Yoco…")], 3)}
+                  ${cluster([field("Description", "What was this for?")], 1)}
+                  ${cluster([field("Receipt or invoice file", "Choose file…")], 1)}
+                </div>
+                ${cta("Save record")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head">
+                  <h3>Money Records</h3>
+                </div>
+                <div class="cluster" style="margin-bottom:16px">
+                  <div class="cluster-row cols-3">
+                    ${field("Type", "All ▾")}
+                    ${field("Search", "Description or category")}
+                    <label class="fl"><span class="fl-name">&nbsp;</span><span class="ghost" style="width:100%;justify-content:center">Export CSV</span></label>
+                  </div>
+                </div>
+                <div class="table-scroll">
+                  <table class="mini">
+                    <thead><tr><th>Date</th><th>Business</th><th>Type</th><th>Category</th><th>Description</th><th class="num">Amount</th></tr></thead>
+                    <tbody>
+                      <tr><td colspan="6">${emptyState("No records in this period", "Sample row: 2026-08-01 · Power Designs Web · Income · Website design income", "R 0")}</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>`
+        },
+        invoices: {
+          title: "Invoices",
+          hash: "invoices",
+          purpose: "Create invoices by hand or from an accepted quote. Track unpaid, mark paid.",
+          notes: [
+            "Clusters: Business + Invoice date; Client name + email + Due date; Status; Notes + line items. Labels stay visible; examples sit inside empty controls.",
+            "Save invoice is full-width 48px on the create card keyline.",
+            "List unpaid total (R 0). Sample card uses a solid border (interactive). Mark paid / Print are 48px with 8px gap.",
+            "Marking paid can post income into Money In / Out. Print template is not its own nav item."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Create Invoice</h3><span class="pill">Manual or from quotes</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "Power Designs Web ▾"), field("Invoice date", "YYYY-MM-DD")], 2)}
+                  ${cluster([field("Client name", "Sample client"), field("Client email", "name@example.com"), field("Due date", "YYYY-MM-DD")], 3)}
+                  ${cluster([field("Status", "Unpaid ▾")], 1)}
+                  ${cluster([area("Notes", "Payment terms, bank details"), area("Line items", "Website design | 0")], 1)}
+                </div>
+                ${cta("Save invoice")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Invoices</h3><span class="muted">Unpaid: R 0</span></div>
+                <div class="card">
+                  <div class="row"><span>INV-0001 · Sample client</span><span class="pill">Unpaid</span></div>
+                  <div class="row"><span>Due · sample date</span><strong>R 0</strong></div>
+                  <div class="btns"><span class="btn">Mark paid</span><span class="btn">Print</span></div>
+                </div>
+                <p class="helper" style="margin-top:16px">No real invoices. Sample card only — solid border because it is interactive.</p>
+              </div>
+            </div>`
+        },
+        todos: {
+          title: "Checklists",
+          hash: "todos",
+          purpose: "Recurring daily / weekly / monthly tasks per business. Completions reset by period; the list stays.",
+          notes: [
+            "Add-task clusters: Task (full width); Repeat + Business. Labels above fields. Add task is the sole primary CTA — 48px full width.",
+            "Three equal-height columns (Daily / Weekly / Monthly), 16px gutters, 16–24px padding. Empty Weekly uses a dashed sample card.",
+            "Rows are 48px. Daily clears each day, weekly on Monday, monthly at month start.",
+            "PD Web marketing seeds appear here and on Dashboard."
+          ],
+          html: `
+            <div class="box"><span class="n">1</span>
+              <div class="panel-head">
+                <div><h3>Recurring to-dos</h3><span class="muted">Daily 0/0 · Weekly 0/0 · Monthly 0/0</span></div>
+                <span class="pill">Checklist</span>
+              </div>
+              <p class="helper">Daily tasks clear each day, weekly every Monday, monthly at month start. The task list stays until you delete it.</p>
+              <div class="form-stack">
+                ${cluster([field("Task", "e.g. Reconcile bank")], 1)}
+                ${cluster([field("Repeat", "Every day ▾"), field("Business", "All / general ▾")], 2)}
+              </div>
+              ${cta("Add task")}
+            </div>
+            <div class="todo-cols">
+              <div class="box"><span class="n">2</span>
+                <h3>Daily</h3>
+                <div class="row"><span><i class="chk"></i>Marketplace daily check</span></div>
+                <div class="row"><span><i class="chk"></i>Reply inbox</span></div>
+              </div>
+              <div class="box">
+                <h3>Weekly</h3>
+                ${emptyState("No weekly tasks", "Add one above", "")}
+              </div>
+              <div class="box">
+                <h3>Monthly</h3>
+                <div class="row"><span><i class="chk"></i>Review NSR listings</span></div>
+              </div>
+            </div>`
+        },
+        reports: {
+          title: "Reports",
+          hash: "reports",
+          purpose: "Profit and loss for the selected period, plus a South African tax-year helper for ITR12 prep — not tax advice.",
+          notes: [
+            "Assessment year is a labelled 48px control. Period still comes from the topbar.",
+            "Metrics: period income, expenses, profit/loss, records with files — all R 0 / 0 here. Equal-height chips.",
+            "P&L by Business: Business / trade, Income, Expenses, Profit — full header words, heavier header row.",
+            "Expense Categories empty state is dashed. Tax year helper + Export tax CSV at 48px."
+          ],
+          html: `
+            <div class="box"><span class="n">1</span>
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Books and tax helpers</p>
+                  <h2 class="hero-h">Reports</h2>
+                  <p class="helper" style="margin:0">Helper only — not tax advice.</p>
+                </div>
+                ${field("Assessment year", "2026 / 2027 ▾")}
+              </div>
+              <div class="grid4" style="margin-bottom:0">
+                <div class="tile"><span>Period income</span><strong>R 0</strong></div>
+                <div class="tile"><span>Period expenses</span><strong>R 0</strong></div>
+                <div class="tile"><span>Period profit / loss</span><strong>R 0</strong></div>
+                <div class="tile"><span>Records with files</span><strong>0</strong></div>
+              </div>
+            </div>
+            <div class="split">
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Profit &amp; Loss by Business</h3><span class="muted">This month</span></div>
+                <div class="table-scroll">
+                  <table class="mini">
+                    <thead><tr><th>Business / trade</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Profit</th></tr></thead>
+                    <tbody>
+                      <tr><td>Power Designs Web</td><td class="num">R 0</td><td class="num">R 0</td><td class="num">R 0</td></tr>
+                      <tr><td>Sunday Bakery</td><td class="num">R 0</td><td class="num">R 0</td><td class="num">R 0</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="box">
+                <div class="panel-head"><h3>Expense Categories</h3><span class="muted">Selected period</span></div>
+                ${emptyState("No expenses in this period", "Selected period", "R 0")}
+              </div>
+            </div>
+            <div class="box"><span class="n">3</span>
+              <div class="panel-head"><h3>Tax year helper (ITR12)</h3><span class="ghost">Export tax CSV</span></div>
+              <div class="grid4">
+                <div class="tile"><span>Tax-year turnover</span><strong>R 0</strong></div>
+                <div class="tile"><span>Tax-year expenses</span><strong>R 0</strong></div>
+                <div class="tile"><span>Tax-year profit / loss</span><strong>R 0</strong></div>
+                <div class="tile"><span>Files attached</span><strong>0</strong></div>
+              </div>
+              <p class="helper" style="margin:0">SARS: keep trades separate · keep source documents · VAT excluded.</p>
+            </div>`
+        },
+        settings: {
+          title: "Settings",
+          hash: "settings",
+          purpose: "Business setup cards that feed books, invoices, and default income categories.",
+          notes: [
+            "Page title Settings is heavier than card titles (brand names).",
+            "Each brand card clusters Name + Type; Default income + SARS grouping; Logo path. Labels stay above fields.",
+            "Reset starter data is a 48px secondary control. No VAT reminder stays in the sidebar.",
+            "Export / Import remain in the topbar."
+          ],
+          html: `
+            <div class="box"><span class="n">1</span>
+              <div class="panel-head"><h3>Business Setup</h3><span class="ghost">Reset starter data</span></div>
+              <p class="helper" style="margin:0">Names, types and default income categories feed your books and invoice-to-income posting.</p>
+            </div>
+            <div class="settings-grid">
+              <div class="box"><span class="n">2</span>
+                <h3 style="margin-bottom:16px">Power Designs Web</h3>
+                ${cluster([field("Name", "Power Designs Web"), field("Type", "Website design")], 2)}
+                ${cluster([field("Default income category", "Website design income"), field("SARS grouping", "Local business/trade income")], 2)}
+                ${cluster([field("Logo path", "assets/power-designs-web.png")], 1)}
+              </div>
+              <div class="box">
+                <h3 style="margin-bottom:16px">Power Designs Apps</h3>
+                ${cluster([field("Name", "Power Designs Apps"), field("Type", "App / PWA development")], 2)}
+                ${cluster([field("Default income category", "App development income"), field("SARS grouping", "Local business/trade income")], 2)}
+              </div>
+              <div class="box">
+                <h3 style="margin-bottom:16px">Sunday Bakery</h3>
+                ${cluster([field("Name", "Sunday Bakery"), field("Type", "Weekly bakery boxes")], 2)}
+                ${cluster([field("Default income category", "Bakery box sales"), field("SARS grouping", "Local business/trade income")], 2)}
+              </div>
+              <div class="box">
+                <h3 style="margin-bottom:16px">Nervous System Reset</h3>
+                ${cluster([field("Name", "Nervous System Reset"), field("Type", "Digital app and workbook")], 2)}
+                ${cluster([field("Default income category", "Digital product sales"), field("SARS grouping", "Local business/trade income")], 2)}
+              </div>
+              <div class="box">
+                <h3 style="margin-bottom:16px">Custom Note Book Project</h3>
+                ${cluster([field("Name", "Custom Note Book Project"), field("Type", "Custom notebooks and planners")], 2)}
+                ${cluster([field("Default income category", "Notebook sales"), field("SARS grouping", "Local business/trade income")], 2)}
+              </div>
+            </div>`
+        },
+        quotes: {
+          title: "Quotes",
+          hash: "quotes",
+          purpose: "Manual quotes for Power Designs Web / Apps. Accepted quotes can become invoices.",
+          notes: [
+            "Visible when Business is All, Power Designs Web, or Power Designs Apps.",
+            "Clusters: Business + Quote date; Client name + email; Package + Status; Scope / notes + line items.",
+            "Save quote is full-width 48px. Sample quote card is solid-border (interactive: Create invoice).",
+            "Open-quotes count on Dashboard uses this list."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Create Manual Quote</h3><span class="pill">Power Designs Web / Apps</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "Power Designs Web ▾"), field("Quote date", "YYYY-MM-DD")], 2)}
+                  ${cluster([field("Client name", "Sample client"), field("Client email", "name@example.com")], 2)}
+                  ${cluster([field("Package", "Launch - R3,990 ▾"), field("Status", "Draft ▾")], 2)}
+                  ${cluster([area("Scope / notes", "Pages, features, terms"), area("Line items", "Website design | 0")], 1)}
+                </div>
+                ${cta("Save quote")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Quotes</h3><span class="muted">Accepted quotes can become invoices.</span></div>
+                <div class="card">
+                  <div class="row"><span>Sample client · Launch</span><span class="pill">Draft</span></div>
+                  <div class="row"><span>Line items total</span><strong>R 0</strong></div>
+                  <div class="btns"><span class="btn">Create invoice</span></div>
+                </div>
+              </div>
+            </div>`
+        },
+        projects: {
+          title: "Web Projects",
+          hash: "projects",
+          purpose: "Process tracker for website / app work — not a separate product, a pipeline board.",
+          notes: [
+            "Visible for All / Power Designs Web / Power Designs Apps.",
+            "Clusters: Client + Business; Package + Project value; Status + Next action date; Notes.",
+            "Save project is full-width 48px on the create-card keyline.",
+            "Pipeline shows Lead / Quoted / In Progress / Complete as four equal-height columns, 16px gutters. Live app also has Accepted, Waiting on client, Ready to launch.",
+            "Lead card is solid-border (interactive). Empty columns stay dashed."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Web Design Project</h3><span class="pill">Process tracker</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Client", "Sample client"), field("Business", "Power Designs Web ▾")], 2)}
+                  ${cluster([field("Package", "Launch, Grow, Lead, Custom"), field("Project value", "R 0.00")], 2)}
+                  ${cluster([field("Status", "Lead ▾"), field("Next action date", "YYYY-MM-DD")], 2)}
+                  ${cluster([area("Notes", "Requirements, content, launch tasks")], 1)}
+                </div>
+                ${cta("Save project")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <h3 style="margin-bottom:16px">Project Pipeline</h3>
+                <div class="kanban">
+                  <div class="col"><b>Lead</b><div class="card">Sample client<br><span class="muted">Launch · next action</span></div></div>
+                  <div class="col"><b>Quoted</b>${emptyState("Empty", "No quotes in this column")}</div>
+                  <div class="col"><b>In Progress</b>${emptyState("Empty", "No projects in this column")}</div>
+                  <div class="col"><b>Complete</b>${emptyState("Empty", "No projects in this column")}</div>
+                </div>
+              </div>
+            </div>`
+        },
+        orders: {
+          title: "Orders",
+          hash: "orders",
+          purpose: "Customer orders and contacts for Sunday Bakery and Custom Note Book.",
+          notes: [
+            "Visible for All / Sunday Bakery / Custom Note Book Project.",
+            "Clusters: Business + Date; Customer name + Phone + Email; Quantity + Product + Total; Status; Notes.",
+            "Save order is full-width 48px. Table headers: Date, Business, Customer, Product, Qty, Status, Total — never truncated.",
+            "Sample row uses placeholder R 0. Export CSV is 48px."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Customer Order</h3><span class="pill">Bakery / Notebook</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "Sunday Bakery ▾"), field("Date", "YYYY-MM-DD")], 2)}
+                  ${cluster([field("Customer name", "Sample customer"), field("Phone", "0xx xxx xxxx"), field("Email", "name@example.com")], 3)}
+                  ${cluster([field("Quantity", "1"), field("Product", "Sunday box, A5 notebook…"), field("Total", "R 0.00")], 3)}
+                  ${cluster([field("Status", "New ▾")], 1)}
+                  ${cluster([area("Notes", "Pickup time, delivery address")], 1)}
+                </div>
+                ${cta("Save order")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Orders and Contacts</h3><span class="ghost">Export CSV</span></div>
+                <div class="table-scroll">
+                  <table class="mini">
+                    <thead><tr><th>Date</th><th>Business</th><th>Customer</th><th>Product</th><th>Qty</th><th>Status</th><th class="num">Total</th></tr></thead>
+                    <tbody>
+                      <tr><td>—</td><td>Sunday Bakery</td><td>Sample customer</td><td>Sunday box</td><td>1</td><td>New</td><td class="num">R 0</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>`
+        },
+        suppliers: {
+          title: "Suppliers",
+          hash: "suppliers",
+          purpose: "Supplier contacts for the notebook project (print, bind, paper, pack, courier).",
+          notes: [
+            "Visible for All / Custom Note Book Project.",
+            "Clusters: Business + Supplier name; Contact person + Email + Phone; Service + Last quote amount; Invoice file; Notes.",
+            "Save supplier is full-width 48px. Sample list card is solid-border. Empty hint uses dashed treatment if the list is empty."
+          ],
+          html: `
+            <div class="split">
+              <div class="box"><span class="n">1</span>
+                <div class="panel-head"><h3>Supplier Record</h3><span class="pill">Notebook project</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "Custom Note Book Project ▾"), field("Supplier name", "Sample printer")], 2)}
+                  ${cluster([field("Contact person", "Name"), field("Email", "name@example.com"), field("Phone", "0xx xxx xxxx")], 3)}
+                  ${cluster([field("Service", "Printing ▾"), field("Last quote amount", "R 0.00")], 2)}
+                  ${cluster([field("Invoice file", "Choose file…")], 1)}
+                  ${cluster([area("Notes", "MOQ, lead time, A5, paper, binding")], 1)}
+                </div>
+                ${cta("Save supplier")}
+              </div>
+              <div class="box"><span class="n">2</span>
+                <h3 style="margin-bottom:16px">Suppliers</h3>
+                <div class="card">
+                  <div class="row"><span>Sample printer</span><span class="pill">Printing</span></div>
+                  <div class="row"><span>Last quote</span><strong>R 0</strong></div>
+                </div>
+              </div>
+            </div>`
+        },
+        assets: {
+          title: "NSR Listings",
+          hash: "assets",
+          purpose: "Nervous System Reset listings plus the Powers Publication sales board — one nav item, two stacked panels.",
+          notes: [
+            "Not a separate top-level nav. Lives inside NSR Listings (#assets).",
+            "KPI chips and platform table (Platform, Status, Views, Orders, Gross, Net, Links) — full header words, heavier header.",
+            "Header actions Refresh / Sync / Hide / Open / Mark reviewed are 48px with 8px gaps.",
+            "Listing form clusters: Business + Platform; Asset name + Listing URL; Price + Last updated; Status; Monthly notes.",
+            "Save listing is full-width 48px. Placeholder dashes only — no live sales copied in."
+          ],
+          html: `
+            <div class="box"><span class="n">1</span>
+              <div class="panel-head">
+                <div>
+                  <h3>Powers Publication Sales</h3>
+                  <p class="helper" style="margin:8px 0 0">Live marketplace stats from the Powers Publication dashboard (port 8766).</p>
+                </div>
+                <div class="btns">
+                  <span class="ghost">Refresh stats</span>
+                  <span class="ghost">Sync now</span>
+                  <span class="ghost">Hide live board</span>
+                  <span class="ghost">Open full window</span>
+                  <span class="ghost">Mark month reviewed</span>
+                </div>
+              </div>
+              <div class="grid6">
+                <div class="tile"><span>Views</span><strong>—</strong></div>
+                <div class="tile"><span>Orders</span><strong>—</strong></div>
+                <div class="tile"><span>Gross (USD)</span><strong>—</strong></div>
+                <div class="tile"><span>Net (USD)</span><strong>—</strong></div>
+                <div class="tile"><span>Conversion</span><strong>—</strong></div>
+                <div class="tile"><span>Platforms live</span><strong>—</strong></div>
+              </div>
+              <div class="table-scroll">
+                <table class="mini">
+                  <thead><tr><th>Platform</th><th>Status</th><th class="num">Views</th><th class="num">Orders</th><th class="num">Gross</th><th class="num">Net</th><th>Links</th></tr></thead>
+                  <tbody>
+                    <tr><td>Gumroad</td><td>Listed</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="muted">—</td></tr>
+                    <tr><td>Ko-fi</td><td>Listed</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="muted">—</td></tr>
+                    <tr><td>itch.io</td><td>Listed</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="muted">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mock">Live board iframe · 127.0.0.1:8766</div>
+            </div>
+            <div class="split">
+              <div class="box"><span class="n">2</span>
+                <div class="panel-head"><h3>Digital Asset Listing</h3><span class="pill">Monthly review</span></div>
+                <div class="form-stack">
+                  ${cluster([field("Business", "Nervous System Reset ▾"), field("Platform", "Gumroad")], 2)}
+                  ${cluster([field("Asset name", "Workbook, booklet, web app"), field("Listing URL", "https://")], 2)}
+                  ${cluster([field("Price", "R 0.00"), field("Last updated", "YYYY-MM-DD")], 2)}
+                  ${cluster([field("Status", "Listed ▾")], 1)}
+                  ${cluster([area("Monthly notes", "Sales, listing changes, screenshots needed")], 1)}
+                </div>
+                ${cta("Save listing")}
+              </div>
+              <div class="box"><span class="n">3</span>
+                <h3 style="margin-bottom:16px">NSR Listings</h3>
+                <p class="helper">Catalog rows for books/reviews · stats above from Powers Publication board.</p>
+                <div class="card" style="margin-bottom:8px">
+                  <div class="row"><span>Gumroad · Workbook</span><span class="pill">Listed</span></div>
+                </div>
+                <div class="card">
+                  <div class="row"><span>KDP · verification</span><span class="pill">Needs update</span></div>
+                </div>
+              </div>
+            </div>`
+        }
+      };
+
+      function deskHtml(key) {
+        const s = SCREENS[key];
+        return `
+          <p class="screen-label">${s.title}</p>
+          <div class="desk">
+            <div class="chrome">
+              <i></i><i></i><i></i>
+              <span class="url">index.html#${s.hash}</span>
+            </div>
+            <div class="shell">
+              ${sideHtml(key)}
+              <div class="main-col">
+                ${topHtml(s.title)}
+                <div class="body">${s.html}</div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function notesHtml(key) {
+        const s = SCREENS[key];
+        return `<h2>${s.title}</h2>
+          <p><em>${s.purpose}</em></p>
+          <ol>${s.notes.map((n) => `<li>${n}</li>`).join("")}</ol>`;
+      }
+
+      let current = "dashboard";
+      const focus = document.getElementById("focus");
+      const board = document.getElementById("board");
+      const host = document.getElementById("frame-host");
+      const callouts = document.getElementById("callouts");
+      const tabs = document.getElementById("screen-tabs");
+
+      tabs.innerHTML = ORDER.map((k) =>
+        `<button type="button" data-screen="${k}">${TAB_LABEL[k]}</button>`
+      ).join("");
+
+      function showFocus(key) {
+        current = key;
+        host.innerHTML = deskHtml(key);
+        callouts.innerHTML = notesHtml(key);
+        tabs.querySelectorAll("button").forEach((b) => {
+          b.classList.toggle("is-on", b.getAttribute("data-screen") === key);
+        });
+      }
+
+      function showBoard() {
+        board.innerHTML = ORDER.map((k) => `<div>${deskHtml(k)}</div>`).join("");
+      }
+
+      document.getElementById("btn-focus").onclick = () => {
+        document.getElementById("btn-focus").classList.add("is-on");
+        document.getElementById("btn-board").classList.remove("is-on");
+        focus.classList.add("is-on");
+        board.classList.remove("is-on");
+      };
+      document.getElementById("btn-board").onclick = () => {
+        document.getElementById("btn-board").classList.add("is-on");
+        document.getElementById("btn-focus").classList.remove("is-on");
+        focus.classList.remove("is-on");
+        board.classList.add("is-on");
+        showBoard();
+      };
+      tabs.querySelectorAll("button").forEach((b) => {
+        b.onclick = () => showFocus(b.getAttribute("data-screen"));
+      });
+      showFocus("dashboard");
+      if (/[?&]print=1/.test(location.search)) {
+        document.getElementById("btn-board").click();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Business Ledger — Corporate Identity Manual</title>
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#1f5fbf">
+
+  <!--
+    Business Ledger CI — filled from project.md, README.md, index.html, styles.css, app.js (2026-08-19).
+    Strategy / voice sentences tagged Source or Draft — confirm. No invented legal name, contacts, or PMS.
+    Tokens used: --ci-primary #1f5fbf, --ci-secondary #16766a, --ci-accent #bd8728,
+    --ci-ink #182028, --ci-paper #ffffff, --ci-font-display / --ci-font-body Inter.
+  -->
+  <style>
+    :root {
+      --ci-primary: #1f5fbf;
+      --ci-secondary: #16766a;
+      --ci-accent: #bd8728;
+      --ci-ink: #182028;
+      --ci-paper: #ffffff;
+      --ci-muted: #68717a;
+      --ci-line: #dce3ea;
+      --ci-soft: #f4f6f8;
+      --ci-on-primary: #ffffff;
+      --ci-danger: #d65b4a;
+      --ci-ok: #16766a;
+      --ci-sidebar: #111923;
+      --ci-hero-deep: #162232;
+      --ci-apps: #14B8A6;
+      --ci-radius: 8px;
+      --ci-font-display: Inter, "Segoe UI", Arial, sans-serif;
+      --ci-font-body: Inter, "Segoe UI", Arial, sans-serif;
+      --ci-shadow: 0 18px 50px rgba(24, 32, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body, .sheet, .swatch .chip, .ci-mark, .mock, .pattern {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      color-adjust: exact;
+    }
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      font-family: var(--ci-font-body);
+      color: var(--ci-ink);
+      background: #dce3ea;
+      line-height: 1.45;
+    }
+    h1, h2, h3, h4 { font-family: var(--ci-font-display); font-weight: 800; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+    p { margin: 0 0 0.7em; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--ci-primary); }
+    ul { margin: 0; padding: 0 0 0 1.1em; }
+    li { margin: 0 0 0.35em; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--ci-line); vertical-align: top; }
+    th { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ci-muted); font-weight: 800; }
+    code, .mono { font-family: Consolas, "Courier New", monospace; font-size: 11px; word-break: break-all; }
+
+    .screen-chrome { max-width: 210mm; margin: 0 auto; padding: 16px 8px 8px; }
+    .screen-chrome .bar {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      background: #fff; border: 1px solid var(--ci-line); border-radius: 10px;
+      padding: 10px 12px; box-shadow: var(--ci-shadow);
+    }
+    .screen-chrome p { margin: 0; font-size: 12px; color: var(--ci-muted); flex: 1; min-width: 200px; }
+    .screen-chrome nav { display: flex; flex-wrap: wrap; gap: 6px; }
+    .screen-chrome a, .screen-chrome button {
+      min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--ci-line);
+      background: #fff; color: var(--ci-ink); font: inherit; font-size: 12px; font-weight: 700;
+      text-decoration: none; display: inline-flex; align-items: center; cursor: pointer;
+    }
+    .screen-chrome button.primary { background: var(--ci-primary); color: #fff; border-color: var(--ci-primary); }
+    .screen-chrome button:focus-visible, .screen-chrome a:focus-visible { outline: 2px solid var(--ci-primary); outline-offset: 2px; }
+
+    .manual { padding-bottom: 48px; }
+    .sheet {
+      width: 210mm; min-height: 297mm; margin: 0 auto 20px; background: var(--ci-paper);
+      color: var(--ci-ink); padding: 14mm 16mm 18mm; box-shadow: var(--ci-shadow);
+      position: relative; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sheet-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      border-bottom: 1px solid var(--ci-line); padding-bottom: 8px; margin-bottom: 16px;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ci-muted); font-weight: 800;
+    }
+    .sheet-head .num { color: var(--ci-primary); letter-spacing: 0.04em; font-size: 18px; font-weight: 800; }
+    .sheet-body { flex: 1; }
+    .sheet-foot {
+      display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 8px;
+      border-top: 1px solid var(--ci-line); font-size: 9px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ci-muted); font-weight: 800;
+    }
+
+    .kicker {
+      display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ci-primary); margin-bottom: 6px;
+    }
+    .lede { font-size: 15px; max-width: 62ch; }
+    .muted { color: var(--ci-muted); }
+    .small { font-size: 12px; }
+    .rule { height: 3px; width: 48px; background: var(--ci-primary); margin: 10px 0 14px; border: 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+    .card { background: var(--ci-soft); border: 1px solid var(--ci-line); border-radius: var(--ci-radius); padding: 14px 16px; }
+    .card h3 { font-size: 16px; margin-bottom: 6px; }
+    .keep { break-inside: avoid; page-break-inside: avoid; }
+
+    .sheet.cover { padding: 0; background: linear-gradient(135deg, var(--ci-hero-deep), var(--ci-primary)); color: #fff; }
+    .cover-inner { flex: 1; display: grid; grid-template-rows: auto 1fr auto; padding: 16mm 18mm 14mm; min-height: 297mm; }
+    .cover-top { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.82; font-weight: 800; }
+    .cover-hero { display: flex; flex-direction: column; justify-content: center; padding: 24px 0; }
+    .cover-hero h1 { font-size: 48px; margin: 12px 0 8px; color: #fff; }
+    .cover-hero .tag { font-size: 20px; font-weight: 600; opacity: 0.9; letter-spacing: 0; }
+    .cover-hero .doc-type { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 800; color: #f0d59f; }
+    .cover-toc { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.22); padding-top: 16px; }
+    .cover-toc div { display: flex; justify-content: space-between; gap: 12px; opacity: 0.92; }
+    .cover-toc span { color: #f0d59f; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .cover-meta { display: flex; justify-content: space-between; margin-top: 18px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; }
+
+    .ci-mark {
+      width: 72px; height: 72px; border-radius: var(--ci-radius);
+      background: var(--ci-primary); color: #fff; display: grid; place-items: center;
+      font-family: var(--ci-font-display); font-weight: 900; font-size: 22px;
+      box-shadow: 0 0 0 2px rgba(31, 95, 191, 0.35); flex-shrink: 0;
+    }
+    .ci-mark.sm { width: 40px; height: 40px; font-size: 14px; }
+    .ci-mark.xs { width: 24px; height: 24px; font-size: 9px; box-shadow: none; }
+    .ci-mark.ink { background: var(--ci-ink); box-shadow: none; }
+    .ci-mark.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px #fff; }
+    .ci-mark.mono-light { background: #fff; color: var(--ci-ink); box-shadow: inset 0 0 0 2px var(--ci-ink); }
+    .lockup { display: flex; align-items: center; gap: 12px; }
+    .lockup.stack { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .wordmark { font-family: var(--ci-font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    .wordmark small { display: block; font-size: 11px; letter-spacing: 0.04em; text-transform: none; color: var(--ci-muted); margin-top: 4px; font-weight: 600; }
+    .stage {
+      background: #fff; border: 1px dashed var(--ci-line); border-radius: var(--ci-radius);
+      padding: 20px; display: grid; place-items: center; min-height: 120px;
+    }
+    .stage.dark { background: var(--ci-sidebar); color: #fff; }
+    .stage.dark .wordmark small { color: rgba(255,255,255,0.58); }
+    .stage.hero { background: linear-gradient(135deg, var(--ci-hero-deep), var(--ci-primary)); color: #fff; }
+    .clear-space {
+      position: relative; display: inline-grid; place-items: center; padding: 24px;
+      background-image:
+        linear-gradient(to right, rgba(31, 95, 191, 0.16) 0 24px, transparent 24px),
+        linear-gradient(to left, rgba(31, 95, 191, 0.16) 0 24px, transparent 24px),
+        linear-gradient(to bottom, rgba(31, 95, 191, 0.16) 0 24px, transparent 24px),
+        linear-gradient(to top, rgba(31, 95, 191, 0.16) 0 24px, transparent 24px);
+    }
+    .min-row { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
+    .dont .ci-mark.stretch { transform: scaleX(1.55); }
+    .dont .ci-mark.rot { transform: rotate(-18deg); }
+    .dont .ci-mark.recolor { background: #2a8f4a; }
+    .dont .ci-mark.glow { box-shadow: 0 0 16px 4px var(--ci-accent); }
+    .dont .ci-mark.outline { background: transparent; color: var(--ci-primary); box-shadow: inset 0 0 0 3px var(--ci-accent); }
+    .dont-card { text-align: center; }
+    .dont-card .lab { font-size: 11px; font-weight: 700; color: var(--ci-danger); margin-top: 8px; }
+    .do-card .lab { font-size: 11px; font-weight: 700; color: var(--ci-ok); margin-top: 8px; }
+
+    .swatch .chip { height: 72px; border-radius: 6px 6px 0 0; background: var(--sw, var(--ci-primary)); }
+    .swatch { background: #fff; border: 1px solid var(--ci-line); border-radius: var(--ci-radius); overflow: hidden; }
+    .swatch dl { margin: 0; padding: 10px 12px 12px; display: grid; gap: 2px; }
+    .swatch h3 { font-size: 13px; padding: 8px 12px 0; letter-spacing: 0; }
+    .swatch div { display: grid; grid-template-columns: 42px 1fr; gap: 8px; font-size: 11px; }
+    .swatch dt { color: var(--ci-muted); font-weight: 700; }
+    .swatch dd { margin: 0; font-family: Consolas, "Courier New", monospace; }
+
+    .pair { display: grid; grid-template-columns: 1fr 1fr; min-height: 56px; border-radius: 6px; overflow: hidden; font-size: 11px; font-weight: 700; }
+    .pair span { display: grid; place-items: center; padding: 8px; text-align: center; }
+    .theme-frame { border-radius: var(--ci-radius); overflow: hidden; border: 1px solid var(--ci-line); }
+    .theme-frame .bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; font-size: 12px; font-weight: 700; }
+    .theme-frame .body { padding: 12px; font-size: 12px; min-height: 72px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 0 14px; border-radius: 8px; font-size: 12px; font-weight: 800; border: 0; }
+    .btn-p { background: var(--ci-primary); color: #fff; }
+    .biz { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; }
+    .biz i { width: 12px; height: 12px; border-radius: 99px; background: var(--c); display: inline-block; }
+
+    .type-card { background: #fff; border: 1px solid var(--ci-line); border-radius: var(--ci-radius); padding: 14px; }
+    .type-card .family { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ci-muted); font-weight: 800; margin-bottom: 4px; }
+    .pangram { font-size: 22px; line-height: 1.25; margin: 0 0 6px; }
+    .alpha { font-size: 13px; margin: 0; }
+    .weights { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 15px; margin-top: 8px; }
+    .hier { list-style: none; padding: 0; margin: 0; }
+    .hier li { display: grid; grid-template-columns: 88px 1fr auto; gap: 8px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--ci-line); }
+    .hier .lvl { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ci-muted); font-weight: 800; }
+
+    .mood { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .mood i { display: block; border-radius: 6px; min-height: 72px; }
+    .pattern { height: 72px; border-radius: 6px; border: 1px solid var(--ci-line); }
+    .pat-dots { background: radial-gradient(var(--ci-primary) 1.2px, transparent 1.3px) 0 0 / 10px 10px, #fff; }
+    .pat-stripes { background: repeating-linear-gradient(135deg, var(--ci-soft), var(--ci-soft) 6px, #fff 6px, #fff 12px); }
+    .pat-grid { background: linear-gradient(var(--ci-line) 1px, transparent 1px) 0 0 / 14px 14px, linear-gradient(90deg, var(--ci-line) 1px, transparent 1px) 0 0 / 14px 14px, #fff; }
+    .pat-bar { background: linear-gradient(90deg, #1f5fbf 0 20%, #14B8A6 20% 40%, #bd8728 40% 60%, #16766a 60% 80%, #d65b4a 80% 100%); }
+    .icon-row { display: flex; gap: 12px; align-items: center; }
+    .ico { width: 36px; height: 36px; border-radius: 8px; box-shadow: inset 0 0 0 2px var(--ci-primary); position: relative; }
+    .ico::after { content: ""; position: absolute; inset: 9px; background: var(--ci-primary); border-radius: 3px; }
+    .ico.fill { background: var(--ci-primary); }
+    .ico.fill::after { background: #fff; border-radius: 50%; inset: 12px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip-t { border: 1px solid var(--ci-line); border-radius: 999px; padding: 4px 10px; font-size: 11px; font-weight: 700; background: #fff; }
+    .tone { display: grid; grid-template-columns: 110px 1fr auto; gap: 8px; align-items: center; font-size: 12px; margin: 0 0 8px; }
+    .meter { height: 8px; background: var(--ci-soft); border-radius: 99px; overflow: hidden; }
+    .meter b { display: block; height: 100%; background: var(--ci-primary); width: var(--w, 50%); }
+    .word-col.use h3 { color: var(--ci-ok); }
+    .word-col.avoid h3 { color: var(--ci-danger); }
+
+    .bc {
+      width: 90mm; height: 50mm; background: var(--ci-primary); color: #fff;
+      border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .bc.back { background: #fff; color: var(--ci-ink); box-shadow: inset 0 0 0 1px var(--ci-line); }
+    .letter { border: 1px solid var(--ci-line); background: #fff; min-height: 200px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; font-size: 11px; }
+    .letter .lh { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid var(--ci-primary); padding-bottom: 10px; }
+    .letter h4 { font-size: 28px; }
+    .sig { background: #fff; border: 1px solid var(--ci-line); padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; font-size: 12px; border-left: 4px solid var(--ci-primary); }
+    .slide { aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--ci-hero-deep), var(--ci-primary)); color: #fff; border-radius: 8px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .social { aspect-ratio: 1; background: var(--ci-soft); border: 1px solid var(--ci-line); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; font-size: 11px; }
+    .social .ph { flex: 1; background: linear-gradient(160deg, var(--ci-hero-deep), var(--ci-primary)); }
+    .social .cap { padding: 8px 10px; background: #fff; }
+    .web { border: 1px solid var(--ci-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11px; }
+    .web .chrome { background: var(--ci-soft); padding: 6px 10px; display: flex; gap: 6px; align-items: center; }
+    .web .dot { width: 8px; height: 8px; border-radius: 50%; background: #c5cdd4; }
+    .web .url { flex: 1; background: #fff; border-radius: 4px; height: 16px; }
+    .web .app { display: grid; grid-template-columns: 88px 1fr; min-height: 120px; }
+    .web .side { background: var(--ci-sidebar); color: #fff; padding: 10px 8px; }
+    .web .mainp { padding: 10px; background: var(--ci-soft); }
+    .web .cta { background: var(--ci-primary); color: #fff; border-radius: 8px; padding: 8px 10px; font-weight: 800; display: inline-block; min-height: 32px; }
+    .pack { height: 100px; border-radius: 8px; background: linear-gradient(#fff 0 68%, var(--ci-primary) 68% 100%); border: 1px solid var(--ci-line); display: grid; place-items: center; font-size: 11px; color: var(--ci-muted); }
+    .sign { height: 72px; background: var(--ci-primary); color: #fff; border-radius: 8px; display: grid; place-items: center; font-size: 16px; font-weight: 800; }
+    .ad { min-height: 88px; padding: 14px; background: linear-gradient(135deg, var(--ci-hero-deep), var(--ci-primary)); color: #fff; border-radius: 8px; }
+
+    .check { list-style: none; padding: 0; }
+    .check li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px solid var(--ci-line); font-size: 12px; }
+    .check li::before { position: absolute; left: 0; font-weight: 800; }
+    .check.do li::before { content: "✓"; color: var(--ci-ok); }
+    .check.dont li::before { content: "✕"; color: var(--ci-danger); }
+    .draft {
+      display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      background: #fff8e8; color: #725b2f; border: 1px solid #f0d59f; border-radius: 3px; padding: 2px 6px; vertical-align: middle;
+    }
+    .src {
+      display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      background: #eaf1ff; color: var(--ci-primary); border-radius: 3px; padding: 2px 6px; vertical-align: middle;
+    }
+
+    @page { size: A4 portrait; margin: 12mm 12mm 14mm; }
+    @page {
+      @bottom-left { content: "Business Ledger  ·  Corporate Identity Manual"; font-size: 8pt; color: #68717a; font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      @bottom-right { content: counter(page); font-size: 8pt; color: #68717a; }
+    }
+
+    @media print {
+      html, body, .sheet, .swatch .chip, .ci-mark, .pattern, * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      body { background: #fff !important; }
+      .screen-only { display: none !important; }
+      .manual { padding: 0; }
+      .sheet { width: auto; min-height: 0; margin: 0; box-shadow: none; overflow: visible; page-break-after: always; break-after: page; }
+      .sheet:last-child { page-break-after: auto; break-after: auto; }
+      .cover-inner { min-height: auto; }
+      a { text-decoration: none; color: inherit; }
+    }
+    html.print-mode .screen-only { display: none !important; }
+    html.print-mode body { background: #fff; }
+    html.print-mode .sheet { box-shadow: none; margin: 0; }
+
+    @media screen and (max-width: 900px) {
+      .sheet { width: auto; min-height: 0; margin: 8px; padding: 20px; }
+      .cover-inner { min-height: 0; }
+      .cover-hero h1 { font-size: 32px; }
+      .grid-2, .grid-3, .grid-4, .cover-toc, .web .app { grid-template-columns: 1fr; }
+      .mood { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-only screen-chrome">
+    <div class="bar">
+      <p><strong>Business Ledger CI</strong> — Chrome print, A4, Background graphics on. <code>?print=1</code> hides this bar. Private tool — do not publish.</p>
+      <nav aria-label="Sections">
+        <a href="#cover">Cover</a>
+        <a href="#introduction">Intro</a>
+        <a href="#strategy">Strategy</a>
+        <a href="#logo">Logo</a>
+        <a href="#color">Colour</a>
+        <a href="#typography">Type</a>
+        <a href="#imagery">Imagery</a>
+        <a href="#voice">Voice</a>
+        <a href="#applications">Apps</a>
+        <a href="#dos-donts">Do’s</a>
+        <a href="#governance">Gov</a>
+        <a href="#assets">Assets</a>
+      </nav>
+      <button type="button" class="primary" id="ci-print">Print / PDF</button>
+    </div>
+  </div>
+
+  <article class="manual">
+
+    <section class="sheet cover" id="cover" aria-label="Cover">
+      <div class="cover-inner">
+        <div class="cover-top">
+          <span>Private multi-business books</span>
+          <span>Confidential · Internal use</span>
+        </div>
+        <div class="cover-hero">
+          <div class="ci-mark" aria-hidden="true">BL</div>
+          <p class="doc-type">Corporate Identity Manual</p>
+          <h1>Business Ledger</h1>
+          <p class="tag">Private books</p>
+        </div>
+        <div>
+          <div class="cover-toc" aria-label="Contents">
+            <div><span>01</span> Cover</div>
+            <div><span>02</span> Introduction &amp; Brand Story</div>
+            <div><span>03</span> Strategy</div>
+            <div><span>04</span> Logo System</div>
+            <div><span>05</span> Color Palette</div>
+            <div><span>06</span> Typography</div>
+            <div><span>07</span> Imagery &amp; Graphic Elements</div>
+            <div><span>08</span> Voice &amp; Tone</div>
+            <div><span>09</span> Applications</div>
+            <div><span>10</span> Do’s and Don’ts</div>
+            <div><span>11</span> Governance</div>
+            <div><span>12</span> Asset downloads</div>
+          </div>
+          <div class="cover-meta">
+            <span>Version 1.0</span>
+            <span>2026-08-19</span>
+            <span>Owner: Tia Power</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet" id="introduction">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">02</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Introduction &amp; brand story</p>
+        <h2>A private books workspace, not a public brand site</h2>
+        <hr class="rule">
+        <p class="lede">Business Ledger is a private multi-business accounting workspace to keep the books for side businesses: income, expenses, invoices, P&amp;L reports and South African tax-year summaries. <span class="src">Source · index.html meta + README</span></p>
+        <div class="grid-2" style="margin-top:16px">
+          <article class="card keep">
+            <h3>Purpose of this manual</h3>
+            <p class="small">This is the identity system for the Ledger product chrome (sidebar mark, blue actions, invoice print). It is not a mockup board and not a wireframe. The product itself is a private finance tool — do not publish this manual or the app.</p>
+          </article>
+          <article class="card keep">
+            <h3>Brand essence</h3>
+            <p class="small">Private books. Five trades. One screen. <span class="draft">Draft — confirm</span></p>
+            <p class="small">Keep the books for every side business in one place. <span class="src">Source · dashboard hero</span></p>
+            <p class="small muted" style="margin-top:8px">Product title: Business Ledger – Multi-Business Books. Legal trading name is not in project docs. <span class="draft">Draft — confirm</span></p>
+          </article>
+        </div>
+        <div class="grid-2" style="margin-top:12px">
+          <article class="card keep">
+            <h3>This product is</h3>
+            <p class="small">A local, static HTML/CSS/JS books tool with browser <code>localStorage</code>, ZAR formatting (<code>en-ZA</code>), South Africa tax year 1 Mar–28/29 Feb, and a switcher for five side businesses. No VAT is added because the businesses are marked as not VAT-registered. <span class="src">Source · project.md, app.js, README</span></p>
+          </article>
+          <article class="card keep">
+            <h3>This product is not</h3>
+            <p class="small">A public website, a bank, a SARS eFiling product, or a multi-tenant SaaS. It is also not a substitute for a tax practitioner. Backups live as JSON in the project <code>backups/</code> folder. <span class="src">Source · README / project.md</span></p>
+          </article>
+        </div>
+        <article class="card keep" style="margin-top:12px">
+          <h3>Umbrella</h3>
+          <p class="small">Ledger tracks multiple businesses side by side. Each business has its own colour chip in the UI. Ledger blue (<code>#1f5fbf</code>) is the product identity — not a replacement for those product brands. <span class="src">Source · project.md, app.js businesses[]</span></p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>02  Introduction &amp; Brand Story</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="strategy">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">03</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Strategy</p>
+        <h2>Mission, vision, and the ground we stand on</h2>
+        <hr class="rule">
+        <div class="grid-2">
+          <article class="card keep">
+            <p class="kicker">Mission <span class="src">Source</span></p>
+            <p>Keep the books for every side business in one place — profit, cash movement, invoices, and what still needs attention.</p>
+          </article>
+          <article class="card keep">
+            <p class="kicker">Vision <span class="draft">Draft — confirm</span></p>
+            <p>Every rand that belongs to these businesses is recorded, labelled by trade, and ready to export — so tax season is a file pack, not a reconstruction.</p>
+          </article>
+        </div>
+        <article class="card keep" style="margin-top:12px">
+          <p class="kicker">Values <span class="draft">Draft — confirm · grounded in product behaviour</span></p>
+          <div class="grid-3">
+            <div><h3>Private by default</h3><p class="small">The app is a local workspace. Do not publish; no secrets in repo docs.</p></div>
+            <div><h3>Honest about tax</h3><p class="small">No VAT line. Tax overview is a preparation helper, not a filing product.</p></div>
+            <div><h3>Backup first</h3><p class="small">Export JSON regularly. Import round-trip is a first-class action in the top bar.</p></div>
+            <div><h3>One desk, five trades</h3><p class="small">Filter by business and period. Colour marks which trade a row belongs to.</p></div>
+            <div><h3>Ready, not fussy</h3><p class="small">Static stack, 48px taps, primary CTA full-width on forms. Product is marked complete / ready to use.</p></div>
+            <div>
+              <h3>Personality</h3>
+              <div class="chips" style="margin-top:6px">
+                <span class="chip-t">Calm</span>
+                <span class="chip-t">Precise</span>
+                <span class="chip-t">Operational</span>
+                <span class="chip-t">Local (ZA)</span>
+                <span class="chip-t">Unshowy</span>
+              </div>
+              <p class="small muted" style="margin-top:6px">Draft — confirm</p>
+            </div>
+          </div>
+        </article>
+        <div class="grid-2" style="margin-top:12px">
+          <article class="card keep">
+            <p class="kicker">Positioning <span class="src">Source · README</span></p>
+            <p class="small">For the operator of several South African side businesses who needs books, quotes, orders, and NSR listing checks in one Chrome window — not five spreadsheets and not a cloud accounting suite.</p>
+          </article>
+          <article class="card keep">
+            <p class="kicker">Audience <span class="draft">Draft — confirm</span></p>
+            <p class="small">The owner-operator of several small businesses. Comfortable in Chrome on this PC. Needs SA tax-year framing and ZAR, not USD-first UI.</p>
+          </article>
+        </div>
+        <article class="card keep" style="margin-top:12px">
+          <p class="kicker">Brand promise <span class="src">Source · sidebar lockup</span></p>
+          <p>Private books.</p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>03  Strategy</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="logo">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">04</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Logo system</p>
+        <h2>The BL mark and wordmark</h2>
+        <hr class="rule">
+        <p class="small muted">Source: <code>index.html</code> <code>.brand-mark</code> is a 40×40px rounded square, brand blue, white “BL”, font-weight 900. Wordmark is “Business Ledger” + small “Private books”. Favicon: <code>assets/business-ledger.ico</code>. No separate SVG wordmark is in the repo — CSS-drawn mark is the print fallback.</p>
+        <div class="grid-2" style="margin-top:12px">
+          <figure class="keep">
+            <p class="kicker">Primary lockup</p>
+            <div class="stage">
+              <div class="lockup">
+                <div class="ci-mark sm" aria-hidden="true">BL</div>
+                <div class="wordmark">Business Ledger<small>Private books</small></div>
+              </div>
+            </div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Secondary — stacked (sidebar)</p>
+            <div class="stage dark" style="justify-content:flex-start;padding:16px">
+              <div class="lockup">
+                <div class="ci-mark sm" aria-hidden="true">BL</div>
+                <div class="wordmark" style="font-size:16px;color:#fff">Business Ledger<small>Private books</small></div>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <div class="grid-3" style="margin-top:12px">
+          <figure class="keep">
+            <p class="kicker">Symbol / isotype</p>
+            <div class="stage"><div class="ci-mark" aria-hidden="true">BL</div></div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Wordmark only</p>
+            <div class="stage"><div class="wordmark">Business Ledger</div></div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">On hero blue</p>
+            <div class="stage hero"><div class="lockup"><div class="ci-mark sm ghost">BL</div><div class="wordmark" style="font-size:18px;color:#fff">Business Ledger</div></div></div>
+          </figure>
+        </div>
+        <p class="small" style="margin-top:14px">Do not replace BL with a serif monogram or a circle. The product mark is a rounded square (radius 8px) matching UI controls. <span class="src">Source · styles.css .brand-mark</span></p>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>04  Logo System</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="logo-usage">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">04</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Logo system · usage</p>
+        <h2>Favicon, mono, reverse, space, and size</h2>
+        <hr class="rule">
+        <div class="grid-3">
+          <figure class="keep">
+            <p class="kicker">Favicon / app icon</p>
+            <div class="stage" style="gap:16px;display:flex;justify-content:center;align-items:flex-end;">
+              <div class="ci-mark" style="width:48px;height:48px;font-size:14px">BL</div>
+              <div class="ci-mark" style="width:32px;height:32px;font-size:11px">BL</div>
+              <div class="ci-mark xs">BL</div>
+            </div>
+            <p class="small muted" style="margin-top:6px">Use the ICO at <code>assets/business-ledger.ico</code>. Theme colour <code>#1f5fbf</code>.</p>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Monochrome</p>
+            <div class="stage"><div class="lockup"><div class="ci-mark ink">BL</div><div class="wordmark" style="font-size:18px">Business Ledger</div></div></div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Reverse</p>
+            <div class="stage dark"><div class="lockup"><div class="ci-mark ghost">BL</div><div class="wordmark" style="font-size:18px;color:#fff">Business Ledger</div></div></div>
+          </figure>
+        </div>
+        <div class="grid-2" style="margin-top:14px">
+          <figure class="keep">
+            <p class="kicker">Clear space</p>
+            <div class="stage">
+              <div class="clear-space">
+                <div class="lockup"><div class="ci-mark sm">BL</div><div class="wordmark" style="font-size:18px">Business Ledger</div></div>
+              </div>
+            </div>
+            <p class="small muted" style="margin-top:6px">Clear space = the 40px mark height. Matches sidebar gap (12px is tighter in-app; print uses a full mark unit). <span class="draft">Draft — confirm print unit</span></p>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Minimum size</p>
+            <div class="stage">
+              <div class="min-row">
+                <div><div class="ci-mark xs">BL</div><p class="small muted">Favicon 16–24 px</p></div>
+                <div><div class="ci-mark sm">BL</div><p class="small muted">UI 40 px (source)</p></div>
+                <div><div class="lockup"><div class="ci-mark sm">BL</div><div class="wordmark" style="font-size:16px">Business Ledger</div></div><p class="small muted">Print lockup ≥ 12 mm</p></div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>04  Logo System</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="logo-donts">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">04</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Logo system · do’s &amp; don’ts · co-branding</p>
+        <h2>Protect the mark</h2>
+        <hr class="rule">
+        <div class="grid-3">
+          <div class="card keep do-card"><div class="stage"><div class="ci-mark">BL</div></div><p class="lab">Do — 8px square on a quiet field</p></div>
+          <div class="card keep do-card"><div class="stage dark"><div class="ci-mark ghost">BL</div></div><p class="lab">Do — reverse on sidebar / hero</p></div>
+          <div class="card keep do-card"><div class="stage"><div class="ci-mark ink">BL</div></div><p class="lab">Do — ink when colour cannot print</p></div>
+          <div class="card keep dont dont-card"><div class="stage"><div class="ci-mark stretch">BL</div></div><p class="lab">Don’t stretch</p></div>
+          <div class="card keep dont dont-card"><div class="stage"><div class="ci-mark rot">BL</div></div><p class="lab">Don’t rotate</p></div>
+          <div class="card keep dont dont-card"><div class="stage"><div class="ci-mark recolor">BL</div></div><p class="lab">Don’t recolour off-palette</p></div>
+          <div class="card keep dont dont-card"><div class="stage"><div class="ci-mark glow">BL</div></div><p class="lab">Don’t add glow or shadow</p></div>
+          <div class="card keep dont dont-card"><div class="stage"><div class="ci-mark outline">BL</div></div><p class="lab">Don’t outline in gold</p></div>
+          <div class="card keep dont dont-card"><div class="stage" style="background:repeating-linear-gradient(45deg,#ccc,#ccc 4px,#eee 4px,#eee 8px)"><div class="ci-mark">BL</div></div><p class="lab">Don’t sit on a busy photo</p></div>
+        </div>
+        <article class="card keep" style="margin-top:14px">
+          <h3>Co-branding with the five trades</h3>
+          <p class="small">Ledger blue identifies the books app. Each tracked business keeps its own colour in lists and checklists — do not recolour the BL mark to bakery gold or notebook coral. <span class="src">Source · app.js businesses[].color</span></p>
+          <div class="stage" style="margin-top:10px;min-height:88px;">
+            <div class="lockup" style="gap:18px;flex-wrap:wrap">
+              <div class="lockup"><div class="ci-mark sm">BL</div><strong>Business Ledger</strong></div>
+              <span class="muted" style="font-size:22px;font-weight:300">|</span>
+              <span class="biz" style="--c:#1f5fbf"><i></i> Example Studio</span>
+              <span class="biz" style="--c:#14B8A6"><i></i> Example Apps</span>
+              <span class="biz" style="--c:#bd8728"><i></i> Example Bakery</span>
+              <span class="biz" style="--c:#16766a"><i></i> Example Wellness</span>
+              <span class="biz" style="--c:#d65b4a"><i></i> Example Notebooks</span>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top:8px">Partner / agency lockups: not documented. Do not invent a public co-brand. <span class="draft">Draft — confirm</span></p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>04  Logo System</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="color">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">05</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Color palette</p>
+        <h2>Tokens from <code>styles.css :root</code></h2>
+        <hr class="rule">
+        <div class="grid-4">
+          <article class="swatch keep" style="--sw:#1f5fbf">
+            <div class="chip"></div>
+            <h3>Primary · Blue</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#1F5FBF</dd></div>
+              <div><dt>RGB</dt><dd>31, 95, 191</dd></div>
+              <div><dt>CMYK</dt><dd>84 · 50 · 0 · 25</dd></div>
+              <div><dt>PMS</dt><dd>Draft — confirm</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#16766a">
+            <div class="chip"></div>
+            <h3>Secondary · Teal</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#16766A</dd></div>
+              <div><dt>RGB</dt><dd>22, 118, 106</dd></div>
+              <div><dt>CMYK</dt><dd>81 · 0 · 10 · 54</dd></div>
+              <div><dt>PMS</dt><dd>Draft — confirm</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#bd8728">
+            <div class="chip"></div>
+            <h3>Accent · Gold</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#BD8728</dd></div>
+              <div><dt>RGB</dt><dd>189, 135, 40</dd></div>
+              <div><dt>CMYK</dt><dd>0 · 29 · 79 · 26</dd></div>
+              <div><dt>PMS</dt><dd>Draft — confirm</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#182028">
+            <div class="chip"></div>
+            <h3>Ink</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#182028</dd></div>
+              <div><dt>RGB</dt><dd>24, 32, 40</dd></div>
+              <div><dt>CMYK</dt><dd>40 · 20 · 0 · 84</dd></div>
+              <div><dt>PMS</dt><dd>Draft — confirm</dd></div>
+            </dl>
+          </article>
+        </div>
+        <div class="grid-4" style="margin-top:10px">
+          <article class="swatch keep" style="--sw:#ffffff">
+            <div class="chip"></div>
+            <h3>Paper</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#FFFFFF</dd></div>
+              <div><dt>RGB</dt><dd>255, 255, 255</dd></div>
+              <div><dt>CMYK</dt><dd>0 · 0 · 0 · 0</dd></div>
+              <div><dt>PMS</dt><dd>—</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#68717a">
+            <div class="chip"></div>
+            <h3>Muted</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#68717A</dd></div>
+              <div><dt>RGB</dt><dd>104, 113, 122</dd></div>
+              <div><dt>CMYK</dt><dd>15 · 7 · 0 · 52</dd></div>
+              <div><dt>PMS</dt><dd>—</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#f4f6f8">
+            <div class="chip"></div>
+            <h3>Soft</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#F4F6F8</dd></div>
+              <div><dt>RGB</dt><dd>244, 246, 248</dd></div>
+              <div><dt>CMYK</dt><dd>2 · 1 · 0 · 3</dd></div>
+              <div><dt>PMS</dt><dd>—</dd></div>
+            </dl>
+          </article>
+          <article class="swatch keep" style="--sw:#d65b4a">
+            <div class="chip"></div>
+            <h3>Coral · alert</h3>
+            <dl>
+              <div><dt>HEX</dt><dd>#D65B4A</dd></div>
+              <div><dt>RGB</dt><dd>214, 91, 74</dd></div>
+              <div><dt>CMYK</dt><dd>0 · 57 · 65 · 16</dd></div>
+              <div><dt>PMS</dt><dd>Draft — confirm</dd></div>
+            </dl>
+          </article>
+        </div>
+        <p class="small muted" style="margin-top:10px">HEX/RGB from CSS. CMYK is a conversion for print notes, not a press proof. Line <code>#dce3ea</code>, dash-soft <code>#c5cdd4</code>, sidebar <code>#111923</code>, Apps chip <code>#14B8A6</code> (app.js, not :root). Windows Terminal tab for this project is the same primary blue.</p>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>05  Color Palette</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="color-usage">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">05</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Color palette · usage, contrast, themes</p>
+        <h2>When to use which colour</h2>
+        <hr class="rule">
+        <table class="keep">
+          <thead><tr><th>Role</th><th>Use for</th><th>Do not use for</th></tr></thead>
+          <tbody>
+            <tr><td>Primary blue</td><td>Mark, active nav, primary buttons, invoice rule, theme-color, WT tab</td><td>Bakery or notebook rows (those keep their business chips)</td></tr>
+            <tr><td>Teal</td><td>NSR live KPIs, positive status pills, secondary emphasis</td><td>Replacing the BL mark</td></tr>
+            <tr><td>Gold</td><td>Month-alert action, Example Bakery chip, warm notices (<code>#fff8e8</code> / <code>#f0d59f</code>)</td><td>Body copy (contrast fails WCAG AA for 14px)</td></tr>
+            <tr><td>Coral</td><td>Destructive icon buttons, blocked status, Example Notebooks chip</td><td>Primary actions</td></tr>
+            <tr><td>Ink / paper / soft</td><td>All long text; page ground is soft, panels are paper</td><td>Accent fills</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin:16px 0 8px;font-size:16px">Contrast (sRGB, relative luminance)</h3>
+        <p class="small">Ink on paper ≈ <strong>16.5:1</strong> AAA. Primary on white ≈ <strong>6.1:1</strong> AA for body. White on primary ≈ <strong>6.1:1</strong> AA. Teal on white ≈ <strong>5.5:1</strong> AA. Gold on white ≈ <strong>3.2:1</strong> — large text only (18px+ / 14px bold). Coral on white ≈ <strong>3.9:1</strong> — large text / UI chrome, not body. Muted on paper is for captions, not legal copy.</p>
+        <div class="grid-2" style="margin-top:10px">
+          <div class="pair keep"><span style="background:#1f5fbf;color:#fff">White on primary · pass AA</span><span style="background:#fff;color:#1f5fbf">Primary on paper · pass AA</span></div>
+          <div class="pair keep"><span style="background:#182028;color:#fff">Ink on paper (inverted)</span><span style="background:#bd8728;color:#fff">Gold · large text only</span></div>
+        </div>
+        <h3 style="margin:16px 0 8px;font-size:16px">Light product UI vs dark sidebar</h3>
+        <div class="grid-2">
+          <div class="theme-frame keep">
+            <div class="bar" style="background:#fff;color:#182028;border-bottom:1px solid #dce3ea"><div class="ci-mark xs">BL</div> Light workspace</div>
+            <div class="body" style="background:#f4f6f8;color:#182028">
+              Soft ground, paper panels, ink text. <span class="btn btn-p">Save record</span>
+            </div>
+          </div>
+          <div class="theme-frame keep">
+            <div class="bar" style="background:#111923;color:#fff"><div class="ci-mark xs ghost">BL</div> Sidebar</div>
+            <div class="body" style="background:#111923;color:rgba(255,255,255,.72)">
+              Nav default 72% white; active tab is solid primary blue, not a second accent.
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>05  Color Palette</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="typography">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">06</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Typography</p>
+        <h2>One family: Inter, then system sans</h2>
+        <hr class="rule">
+        <p class="small muted">Source: <code>styles.css</code> <code>font-family: Inter, "Segoe UI", Arial, sans-serif</code>. Neither the app nor this manual loads a webfont. If Inter is installed it is used; otherwise Segoe UI (Windows) or Arial.</p>
+        <div class="grid-2" style="margin-top:12px">
+          <article class="type-card keep" style="font-family: var(--ci-font-display)">
+            <p class="family">Primary / display · Inter 800</p>
+            <p class="pangram" style="font-weight:800;letter-spacing:-0.03em">Keep the books for every side business.</p>
+            <p class="alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz  0123456789</p>
+            <div class="weights">
+              <span style="font-weight:800">ExtraBold 800</span>
+              <span style="font-weight:900">Black 900 (mark only)</span>
+            </div>
+          </article>
+          <article class="type-card keep">
+            <p class="family">Secondary / body · Inter 400–700</p>
+            <p class="pangram" style="font-size:16px">Filter by business and period to see profit, cash movement, and what still needs attention.</p>
+            <p class="alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz  R1,234.56</p>
+            <div class="weights">
+              <span style="font-weight:400">Regular 400</span>
+              <span style="font-weight:600">Semibold 600</span>
+              <span style="font-weight:700">Bold 700</span>
+              <span style="font-weight:800">Extra 800</span>
+            </div>
+          </article>
+        </div>
+        <article class="type-card keep" style="margin-top:12px;font-family: Consolas, 'Courier New', monospace">
+          <p class="family">Tertiary / data · Consolas / Courier New</p>
+          <p class="pangram" style="font-size:16px">R0.00  ·  2026-07-21  ·  #1f5fbf  ·  business-ledger-backup-YYYY-MM-DD.json</p>
+          <p class="small muted">Money in the app is <code>en-ZA</code> currency via <code>Intl</code>, not this face. Use mono for paths, HEX, and backup filenames only.</p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>06  Typography</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="type-hierarchy">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">06</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Typography · hierarchy, tracking, licensing</p>
+        <h2>Scale from the product CSS</h2>
+        <hr class="rule">
+        <ul class="hier">
+          <li><span class="lvl">H1</span><span style="font-size:32px;font-weight:800">Dashboard</span><span class="muted">32 / 800 · source</span></li>
+          <li><span class="lvl">H2</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.03em">Keep the books…</span><span class="muted">clamp 28–40 · −3%</span></li>
+          <li><span class="lvl">H3</span><span style="font-size:16px;font-weight:800">Business Snapshot</span><span class="muted">16 / 800</span></li>
+          <li><span class="lvl">Body</span><span style="font-size:14px;line-height:1.5">Filter by business and period. Operational tools stay available when you need them.</span><span class="muted">14–16 / 1.5</span></li>
+          <li><span class="lvl">Hint</span><span style="font-size:13px;color:#68717a">Built for your current non-VAT registered setup.</span><span class="muted">13 muted</span></li>
+          <li><span class="lvl">Micro</span><span style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#68717a">South Africa tax year</span><span class="muted">10 / 0.1em / 800</span></li>
+        </ul>
+        <div class="grid-2" style="margin-top:16px">
+          <article class="card keep">
+            <h3>Fallbacks</h3>
+            <p class="small">Display + body: <code>Inter, "Segoe UI", Arial, sans-serif</code></p>
+            <p class="small">Invoice print (in-app): <code>Arial, sans-serif</code> — existing export; do not restyle without a version bump.</p>
+            <p class="small">Tertiary: Consolas, Courier New</p>
+          </article>
+          <article class="card keep">
+            <h3>Licensing</h3>
+            <p class="small">Inter is the SIL Open Font License face specified in CSS. Segoe UI and Arial are system fonts on this Windows machine. Invoice HTML currently uses Arial only. No paid webfont contract is recorded. <span class="draft">Draft — confirm if Inter should be bundled locally for print</span></p>
+          </article>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>06  Typography</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="imagery">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">07</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Imagery &amp; graphic elements</p>
+        <h2>UI chrome, not lifestyle photography</h2>
+        <hr class="rule">
+        <p class="small">The product has no photography direction. Imagery is functional: business logos in <code>assets/</code>, a 8px radius, a light shadow, and the five trade colours as left-border chips on checklist rows. <span class="src">Source · styles.css / assets/</span></p>
+        <div class="mood keep" style="margin:12px 0" aria-hidden="true">
+          <i style="background:#1f5fbf" title="PD Web"></i>
+          <i style="background:#14B8A6" title="PD Apps"></i>
+          <i style="background:#bd8728" title="Bakery"></i>
+          <i style="background:#16766a" title="NSR"></i>
+          <i style="background:#d65b4a" title="Example Notebooks"></i>
+        </div>
+        <div class="grid-2">
+          <article class="card keep">
+            <h3>Icons</h3>
+            <p class="small">No icon font. Controls are labelled buttons (Export backup, Save record). Destructive actions use coral. Radius 8px; tap 48px. <span class="src">Source</span></p>
+            <div class="icon-row" style="margin-top:10px" aria-hidden="true">
+              <span class="ico"></span><span class="ico fill"></span>
+            </div>
+          </article>
+          <article class="card keep">
+            <h3>Patterns &amp; motifs</h3>
+            <p class="small">Hairline <code>#dce3ea</code>. Hero is a 135° gradient from <code>#162232</code> to primary. Month alert is cream + gold, not red. Trade stripe (below) is for internal docs only — not a public rainbow logo. <span class="draft">Draft — confirm motif use</span></p>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="pattern pat-dots"></div>
+              <div class="pattern pat-stripes"></div>
+              <div class="pattern pat-grid"></div>
+              <div class="pattern pat-bar"></div>
+            </div>
+          </article>
+        </div>
+        <div class="grid-2" style="margin-top:12px">
+          <article class="card keep">
+            <h3>Do</h3>
+            <ul class="small">
+              <li>Use each business’s stored logo file next to its name in lists.</li>
+              <li>Keep screenshots of the app cropped to the shell (sidebar + paper).</li>
+              <li>Prefer empty states and numbers over stock photos of “finance”.</li>
+            </ul>
+          </article>
+          <article class="card keep">
+            <h3>Don’t</h3>
+            <ul class="small">
+              <li>Don’t use stock handshake / skyline accounting photography.</li>
+              <li>Don’t put live totals, client names, or backup JSON into public decks.</li>
+              <li>Don’t apply Instagram filters to the UI or the BL mark.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>07  Imagery &amp; Graphic Elements</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="voice">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">08</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Voice &amp; tone</p>
+        <h2>How the product already speaks</h2>
+        <hr class="rule">
+        <p class="lede">Plain, operational English. Short labels. South African tax framing without jargon theatre. <span class="src">Source · UI copy</span></p>
+        <div class="chips" style="margin:10px 0 14px">
+          <span class="chip-t">Direct</span>
+          <span class="chip-t">Unfussy</span>
+          <span class="chip-t">Local</span>
+          <span class="chip-t">Private</span>
+        </div>
+        <h3 style="font-size:16px;margin-bottom:8px">Tone by context <span class="draft">Draft — confirm</span></h3>
+        <div class="tone"><span>In-product</span><div class="meter"><b style="--w:25%"></b></div><span class="muted">Neutral, labelled, no jokes</span></div>
+        <div class="tone"><span>Alerts</span><div class="meter"><b style="--w:40%"></b></div><span class="muted">Warm gold, still specific (NSR check-in)</span></div>
+        <div class="tone"><span>Docs / README</span><div class="meter"><b style="--w:35%"></b></div><span class="muted">How to open, backup, tax note</span></div>
+        <div class="tone"><span>Social</span><div class="meter"><b style="--w:5%"></b></div><span class="muted">Not a public channel — do not post books</span></div>
+        <div class="grid-3" style="margin-top:14px">
+          <article class="card keep"><p class="kicker">Pillar 1</p><p class="small">Money in / money out, by business and period.</p></article>
+          <article class="card keep"><p class="kicker">Pillar 2</p><p class="small">Backup is part of the work, not an afterthought.</p></article>
+          <article class="card keep"><p class="kicker">Pillar 3</p><p class="small">VAT is out of scope until registration changes.</p></article>
+        </div>
+        <article class="card keep" style="margin-top:12px">
+          <p class="kicker">Tagline <span class="src">Source</span></p>
+          <p style="font-size:22px;font-weight:800">Private books</p>
+          <p class="small muted">Use under the wordmark in the sidebar. Do not replace with “#1 accounting app” or similar. Hero sentence may appear in full: “Keep the books for every side business in one place.”</p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>08  Voice &amp; Tone</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="voice-copy">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">08</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Voice &amp; tone · words &amp; samples</p>
+        <h2>Language already in the product</h2>
+        <hr class="rule">
+        <div class="grid-2">
+          <article class="card word-col use keep">
+            <h3>Words to use <span class="src">Source</span></h3>
+            <p class="small">Books, money records, income, expenses, invoices, quotes, checklists, export backup, import backup, tax year, no VAT, side business, period, net profit, listings.</p>
+          </article>
+          <article class="card word-col avoid keep">
+            <h3>Words to avoid <span class="draft">Draft — confirm</span></h3>
+            <p class="small">Synergy, cloud ledger, AI bookkeeper, “simply powerful”, fintech, unicorn, “SARS-ready” as a guarantee, public URLs for this private tool, client names in screenshots.</p>
+          </article>
+        </div>
+        <article class="card keep" style="margin-top:12px">
+          <h3>Style</h3>
+          <p class="small">Sentence case in running text. Title case for view names (Dashboard, Money In / Out, NSR Listings). Currency as ZAR via <code>en-ZA</code>. Dates ISO in data, human in UI. No exclamation marks in chrome. Reading level: operator who already knows the businesses. <span class="src">Source · viewLabels + copy</span></p>
+        </article>
+        <div class="grid-2" style="margin-top:12px">
+          <article class="card keep">
+            <p class="kicker">Sample · in-product <span class="src">Source</span></p>
+            <p class="small">“Filter by business and period to see profit, cash movement, and what still needs attention. Operational tools stay available when you need them.”</p>
+          </article>
+          <article class="card keep">
+            <p class="kicker">Sample · alert <span class="src">Source</span></p>
+            <p class="small">“Example Wellness monthly check-in — It is time to update where your digital assets are listed and whether anything needs refreshing.”</p>
+          </article>
+          <article class="card keep">
+            <p class="kicker">Sample · tax note <span class="src">Source · README</span></p>
+            <p class="small">“VAT is not included because the businesses are currently marked as not VAT registered. The tax overview is a preparation helper only.”</p>
+          </article>
+          <article class="card keep">
+            <p class="kicker">Sample · email / social <span class="draft">Draft — confirm</span></p>
+            <p class="small">Do not send marketing email for Ledger. If a note is needed internally: “Business Ledger is the private books app on this PC. Export a JSON backup before you move the folder.”</p>
+          </article>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>08  Voice &amp; Tone</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="applications">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">09</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Applications</p>
+        <h2>Invoice print, card, signature</h2>
+        <hr class="rule">
+        <p class="small muted">Public stationery is not in the repo. Invoice/quote HTML is the real printed application (Arial, ink, 3px primary rule, “Business Ledger · No VAT”). Card and signature below are CSS mockups for a private operator — not a shopfront. <span class="draft">Draft — confirm whether a card is wanted</span></p>
+        <div class="grid-2" style="margin-top:12px">
+          <figure class="keep">
+            <p class="kicker">Business card</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <div class="bc">
+                <div class="lockup"><div class="ci-mark sm ghost">BL</div></div>
+                <div>
+                  <div class="wordmark" style="font-size:16px;color:#fff">Business Ledger</div>
+                  <div class="small" style="opacity:.8">Private books</div>
+                </div>
+              </div>
+              <div class="bc back">
+                <div class="small muted">Not for publication</div>
+                <div>
+                  <strong>Operator</strong>
+                  <div class="small">Multi-business books</div>
+                  <div class="small muted">Contact: not in project docs</div>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Email signature</p>
+            <div class="sig">
+              <div class="ci-mark sm">BL</div>
+              <div>
+                <strong>Business Ledger</strong> · Private books<br>
+                <span class="muted">Internal workspace — not a public inbox</span>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <figure class="keep" style="margin-top:14px">
+          <p class="kicker">Letterhead / invoice (matches in-app print)</p>
+          <div class="letter">
+            <div class="lh">
+              <div><strong>Example Studio</strong><div class="muted">Business Ledger · No VAT</div></div>
+              <div><strong>No VAT</strong></div>
+            </div>
+            <h4>Invoice</h4>
+            <p class="muted">INV-0001</p>
+            <p>Body lines use ink on paper. Rule is primary blue, 3px. Do not add a VAT column.</p>
+          </div>
+        </figure>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>09  Applications</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="applications-more">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">09</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Applications · screens &amp; optional</p>
+        <h2>App chrome first; packaging is out of scope</h2>
+        <hr class="rule">
+        <div class="grid-2">
+          <figure class="keep">
+            <p class="kicker">Presentation title</p>
+            <div class="slide">
+              <div class="ci-mark sm ghost">BL</div>
+              <div>
+                <div class="small" style="letter-spacing:.14em;text-transform:uppercase;opacity:.75">Business Ledger</div>
+                <div class="wordmark" style="font-size:22px;color:#fff">Keep the books for every side business in one place.</div>
+              </div>
+            </div>
+          </figure>
+          <figure class="keep">
+            <p class="kicker">Social</p>
+            <div class="social">
+              <div class="ph"></div>
+              <div class="cap"><strong>Business Ledger</strong><div class="muted">Private tool — no public social profile is documented. Do not post books data.</div></div>
+            </div>
+          </figure>
+        </div>
+        <figure class="keep" style="margin-top:12px">
+          <p class="kicker">Website / app chrome <span class="src">Source · index.html shell</span></p>
+          <div class="web">
+            <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url"></span></div>
+            <div class="app">
+              <div class="side">
+                <div class="lockup" style="margin-bottom:8px"><div class="ci-mark xs">BL</div><span><strong style="font-size:10px">Business Ledger</strong><br><span style="opacity:.58;font-size:9px">Private books</span></span></div>
+                <div style="background:#1f5fbf;border-radius:6px;padding:6px 8px;font-weight:700">Dashboard</div>
+              </div>
+              <div class="mainp">
+                <div class="muted" style="letter-spacing:.1em;text-transform:uppercase;font-weight:800;font-size:9px">South Africa tax year: 1 Mar to 28/29 Feb</div>
+                <strong style="font-size:16px">Keep the books for every side business in one place.</strong>
+                <div style="margin-top:8px"><span class="cta">Save record</span></div>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <div class="grid-3" style="margin-top:12px">
+          <figure class="keep"><p class="kicker">Packaging</p><div class="pack">Not applicable — local web app</div></figure>
+          <figure class="keep"><p class="kicker">Signage</p><div class="sign">Not a shopfront</div></figure>
+          <figure class="keep"><p class="kicker">Ads</p><div class="ad"><div class="small">Do not run ads for this private tool</div><strong>No public campaign</strong></div></figure>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>09  Applications</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="dos-donts">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">10</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Do’s and don’ts</p>
+        <h2>Quick reference</h2>
+        <hr class="rule">
+        <div class="grid-2">
+          <article class="card keep">
+            <h3 style="color:var(--ci-ok)">Do</h3>
+            <ul class="check do">
+              <li>Use the 8px rounded-square BL mark in primary blue.</li>
+              <li>Keep “Private books” as the only sidebar tagline.</li>
+              <li>Set body text in ink on paper or soft.</li>
+              <li>Use primary for active nav and the sole primary CTA on a form.</li>
+              <li>Colour checklist rows with the business chip, not the BL mark.</li>
+              <li>Print invoices with the 3px primary rule and “No VAT”.</li>
+              <li>Store backups under the project <code>backups/</code> folder on D:.</li>
+            </ul>
+          </article>
+          <article class="card keep">
+            <h3 style="color:var(--ci-danger)">Don’t</h3>
+            <ul class="check dont">
+              <li>Don’t publish the app, this manual, or live books data.</li>
+              <li>Don’t stretch, rotate, or recolour BL to a trade colour.</li>
+              <li>Don’t set body copy in gold or coral.</li>
+              <li>Don’t add a VAT column or claim VAT registration.</li>
+              <li>Don’t swap Inter/Segoe for a display serif in the product.</li>
+              <li>Don’t treat a mockup or wireframe PDF as this CI.</li>
+              <li>Don’t put keys or passwords in this file.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>10  Do’s and Don’ts</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="governance">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">11</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Governance</p>
+        <h2>Who owns the brand, and how files move</h2>
+        <hr class="rule">
+        <table>
+          <tbody>
+            <tr><th style="width:28%">Owner</th><td>Tia Power (tpowe). <span class="src">Source · PROJECTS.md</span></td></tr>
+            <tr><th>Approval</th><td>New lockup, colour, or tagline needs a bump of this manual before it ships in <code>index.html</code> / <code>styles.css</code>. <span class="draft">Draft — confirm process</span></td></tr>
+            <tr><th>File formats</th><td>ICO for favicon; PNG/SVG for business logos in <code>assets/</code>; HTML+CSS for this manual; PDF via Chrome print-to-pdf (portrait, background graphics). Invoice print is generated HTML.</td></tr>
+            <tr><th>Naming</th><td><code>business-ledger.ico</code>; backups <code>business-ledger-backup-YYYY-MM-DD.json</code>; CI PDF <code>docs/design/business-ledger-company-ci.pdf</code>; this file <code>docs\company-ci.html</code>.</td></tr>
+            <tr><th>Partners / freelancers</th><td>Private finance tool — do not hand this repo or live JSON to a public agency without stripping books data. No partner brand kit is documented. <span class="draft">Draft — confirm</span></td></tr>
+            <tr><th>Version</th><td>1.0 · 2026-08-19 · first CI from product CSS/HTML. Strategy/voice lines marked Draft still need owner lock.</td></tr>
+            <tr><th>Review cadence</th><td>When primary blue, mark, or tagline changes in CSS/HTML, refresh this HTML and reprint the PDF. <span class="draft">Draft — confirm</span></td></tr>
+          </tbody>
+        </table>
+        <article class="card keep" style="margin-top:16px">
+          <h3>Change control</h3>
+          <p class="small">Archive the previous PDF beside the new one. Do not silently restyle <code>--blue</code> or the BL mark. Keep secrets out of this document.</p>
+        </article>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>11  Governance</span><span>v1.0</span></footer>
+    </section>
+
+    <section class="sheet" id="assets">
+      <header class="sheet-head"><span>Corporate Identity Manual</span><span class="num">12</span></header>
+      <div class="sheet-body">
+        <p class="kicker">Asset downloads / links</p>
+        <h2>Where the files live (C: paths only)</h2>
+        <hr class="rule">
+        <p class="small muted">No secrets. Localhost ports and live sales URLs belong to other products, not this identity kit.</p>
+        <table>
+          <thead><tr><th>Asset</th><th>Path</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>This HTML</td><td class="mono">docs/design/company-ci.html</td><td>Source of this manual</td></tr>
+            <tr><td>CI PDF (canonical)</td><td class="mono">docs/design/business-ledger-company-ci.pdf</td><td>Brand manual PDF</td></tr>
+            <tr><td>Favicon</td><td class="mono">assets/business-ledger.ico</td><td>Product icon</td></tr>
+            <tr><td>App</td><td class="mono">index.html</td><td>Open in Chrome or Edge</td></tr>
+            <tr><td>Styles / tokens</td><td class="mono">styles.css</td><td>:root colours and type</td></tr>
+            <tr><td>Project rules</td><td class="mono">docs/MAINTAINER-NOTES.md</td><td>Status, VAT, tab colour</td></tr>
+            <tr><td>README</td><td class="mono">README.md</td><td>What it tracks</td></tr>
+            <tr><td>Trade logos</td><td class="mono">assets/</td><td>PNG/SVG per business — not the BL mark</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="sheet-foot"><span>Business Ledger</span><span>12  Asset downloads</span><span>v1.0</span></footer>
+    </section>
+  </article>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        if (new URLSearchParams(window.location.search).get("print") === "1") {
+          root.classList.add("print-mode");
+        }
+      } catch (e) {}
+      var btn = document.getElementById("ci-print");
+      if (btn) btn.addEventListener("click", function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>

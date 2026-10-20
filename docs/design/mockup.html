@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Business Ledger — mockup</title>
+    <style>
+      /* Brand tokens from styles.css. One .slide per real view. Print = one landscape sheet each. */
+      :root {
+        --blue: #1f5fbf;
+        --ink: #182028;
+        --paper: #ffffff;
+        --soft: #f4f6f8;
+        --muted: #68717a;
+        --line: #dce3ea;
+        --brand: #1f5fbf;
+        --brand-ink: #ffffff;
+        --bg: #182028;
+        --tap: 48px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        font: 16px/1.4 Inter, "Segoe UI", system-ui, sans-serif;
+        color: #fff;
+        background: var(--bg);
+      }
+      .deck-ui {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #111923;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .deck-ui strong { font-size: 14px; }
+      .deck-ui #counter { color: rgba(255, 255, 255, 0.58); font-size: 13px; margin-right: auto; }
+      .deck-ui button {
+        min-height: var(--tap);
+        min-width: var(--tap);
+        padding: 0 14px;
+        border: 1px solid var(--blue);
+        border-radius: 10px;
+        background: var(--blue);
+        color: var(--brand-ink);
+        font: inherit;
+        cursor: pointer;
+      }
+      .deck-ui button:disabled { opacity: 0.4; cursor: default; }
+      .slide {
+        display: none;
+        flex-direction: column;
+        min-height: calc(100vh - 70px);
+        padding: 16px 20px 24px;
+      }
+      .slide.is-on { display: flex; }
+      .slide-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .slide-head h2 { margin: 0; font-size: 1.15rem; }
+      .slide-head small { color: rgba(255, 255, 255, 0.58); font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+      .frame-shell {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        background: #111;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .chrome {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: #111923;
+      }
+      .traffic { display: flex; gap: 6px; }
+      .traffic i { width: 10px; height: 10px; border-radius: 50%; }
+      .traffic .r { background: #ff5f57; }
+      .traffic .y { background: #febc2e; }
+      .traffic .g { background: #28c840; }
+      .url {
+        flex: 1;
+        min-height: 28px;
+        border-radius: 8px;
+        background: #0e131c;
+        color: rgba(255, 255, 255, 0.58);
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+      }
+      .stage {
+        flex: 1;
+        min-height: 70vh;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .stage img, .stage iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 70vh;
+        border: 0;
+        object-fit: contain;
+        object-position: top center;
+        background: var(--paper);
+      }
+      .live { display: block; height: 100%; }
+      .shot { display: none; height: 100%; }
+      @page { size: A4 landscape; margin: 8mm; }
+      @media print {
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .deck-ui { display: none !important; }
+        .slide {
+          display: flex !important;
+          min-height: 0;
+          height: 190mm;
+          padding: 6mm;
+          break-after: page;
+          page-break-after: always;
+        }
+        .slide:last-child { break-after: auto; page-break-after: auto; }
+        .live { display: none !important; }
+        .shot { display: block !important; }
+        .stage { min-height: 0; background: var(--paper); }
+        .stage img { min-height: 0; height: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck-ui">
+      <strong>Business Ledger — mockup</strong>
+      <span id="counter">1 / 11</span>
+      <button type="button" id="prev">← Prev</button>
+      <button type="button" id="next">Next →</button>
+    </div>
+    <div id="slides"></div>
+    <script>
+      const PRIMARY = "http://127.0.0.1:8088/";
+      const FALLBACK = "http://127.0.0.1:18775/";
+      let HOST = PRIMARY;
+      const SLIDES = [
+        { title: "Dashboard", file: "index.html#dashboard", hash: "dashboard", shot: "../mockup-slides/01-dashboard.png" },
+        { title: "Money In / Out", file: "index.html#transactions", hash: "transactions", shot: "../mockup-slides/02-money-in-out.png" },
+        { title: "Invoices", file: "index.html#invoices", hash: "invoices", shot: "../mockup-slides/03-invoices.png" },
+        { title: "Checklists", file: "index.html#todos", hash: "todos", shot: "../mockup-slides/04-checklists.png" },
+        { title: "Reports", file: "index.html#reports", hash: "reports", shot: "../mockup-slides/05-reports.png" },
+        { title: "Settings", file: "index.html#settings", hash: "settings", shot: "../mockup-slides/06-settings.png" },
+        { title: "Quotes", file: "index.html#quotes", hash: "quotes", shot: "../mockup-slides/07-quotes.png" },
+        { title: "Web Projects", file: "index.html#projects", hash: "projects", shot: "../mockup-slides/08-web-projects.png" },
+        { title: "Orders", file: "index.html#orders", hash: "orders", shot: "../mockup-slides/09-orders.png" },
+        { title: "Suppliers", file: "index.html#suppliers", hash: "suppliers", shot: "../mockup-slides/10-suppliers.png" },
+        { title: "NSR Listings", file: "index.html#assets", hash: "assets", shot: "../mockup-slides/11-nsr-listings.png" }
+      ];
+      function liveSrc(hash) {
+        return HOST + "?mockup=1#" + hash;
+      }
+      function barUrl(hash) {
+        return HOST + "#" + hash;
+      }
+      const root = document.getElementById("slides");
+      const printing = /[?&]print=1/.test(location.search);
+      function render() {
+        root.innerHTML = SLIDES.map(function (s, i) {
+          return (
+            '<section class="slide' + (i === 0 ? " is-on" : "") + '">' +
+              '<div class="slide-head"><h2>' + (i + 1) + ". " + s.title +
+              '</h2><small>' + s.file + "</small></div>" +
+              '<div class="frame-shell">' +
+                '<div class="chrome"><div class="traffic"><i class="r"></i><i class="y"></i><i class="g"></i></div>' +
+                '<div class="url" data-hash="' + s.hash + '">' + barUrl(s.hash) + "</div></div>" +
+                '<div class="stage">' +
+                  '<div class="live"><iframe title="' + s.title + '" data-hash="' + s.hash + '" src="' + liveSrc(s.hash) +
+                  '" loading="' + (printing || i === 0 ? "eager" : "lazy") + '"></iframe></div>' +
+                  '<div class="shot"><img alt="' + s.title + '" src="' + s.shot + '"></div>' +
+                "</div></div></section>"
+          );
+        }).join("");
+      }
+      render();
+      function applyHost(next) {
+        HOST = next;
+        Array.prototype.forEach.call(document.querySelectorAll("iframe[data-hash]"), function (fr) {
+          fr.src = liveSrc(fr.getAttribute("data-hash"));
+        });
+        Array.prototype.forEach.call(document.querySelectorAll(".url[data-hash]"), function (el) {
+          el.textContent = barUrl(el.getAttribute("data-hash"));
+        });
+      }
+      (function pickHost() {
+        const ctrl = new AbortController();
+        const timer = setTimeout(function () { ctrl.abort(); }, 800);
+        fetch(PRIMARY, { method: "GET", mode: "no-cors", cache: "no-store", signal: ctrl.signal })
+          .then(function () { clearTimeout(timer); })
+          .catch(function () {
+            clearTimeout(timer);
+            if (HOST !== FALLBACK) applyHost(FALLBACK);
+          });
+      })();
+      const slides = Array.prototype.slice.call(root.querySelectorAll(".slide"));
+      let i = 0;
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const counter = document.getElementById("counter");
+      function show(n) {
+        i = Math.max(0, Math.min(slides.length - 1, n));
+        slides.forEach(function (el, j) { el.classList.toggle("is-on", j === i); });
+        counter.textContent = (i + 1) + " / " + slides.length;
+        prev.disabled = i === 0;
+        next.disabled = i === slides.length - 1;
+      }
+      prev.onclick = function () { show(i - 1); };
+      next.onclick = function () { show(i + 1); };
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "PageDown") show(i + 1);
+        if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+      });
+      show(0);
+      if (printing) slides.forEach(function (el) { el.classList.add("is-on"); });
+    </script>
+  </body>
+</html>

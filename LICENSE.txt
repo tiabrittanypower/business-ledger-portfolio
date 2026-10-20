@@ -1,0 +1,25 @@
+Business Ledger — Proprietary Licence
+
+Copyright (c) 2026. All rights reserved.
+
+This software is licensed for use by the person or entity that purchased it
+(the "Licensee").
+
+You may:
+- Install and use the software on computers you own or control
+- Make backup copies for your own archival purposes
+- Update the software with official release files you receive
+
+You may not:
+- Redistribute, resell, sublicense, or share the software with others
+- Publish the source or a modified version as a competing product
+- Remove or obscure copyright or licence notices
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY ARISING FROM USE OF THE SOFTWARE.
+
+Tax and accounting outputs are informational helpers only and are not
+professional advice.

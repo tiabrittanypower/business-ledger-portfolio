@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Business Ledger — multi-business books (downloadable)</title>
+  <meta name="description" content="Downloadable multi-business books app for South Africa: income, expenses, invoices, quotes, checklists, P&amp;L and tax-year helpers. Runs in your browser; data stays in localStorage — no account or cloud.">
+  <meta name="theme-color" content="#1f5fbf">
+  <meta name="msapplication-TileColor" content="#1f5fbf">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Business Ledger — multi-business books">
+  <meta property="og:description" content="One-time-purchase downloadable books app. Income, expenses, invoices, quotes, checklists and SA tax-year helpers. Your data stays on your computer.">
+  <meta property="og:locale" content="en_ZA">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Business Ledger">
+  <meta name="twitter:description" content="Downloadable multi-business books app. Data stays in your browser — no account required.">
+  <link rel="icon" href="assets/business-ledger.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="business-ledger-app">
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+  <div id="setupWizard" class="setup-wizard" hidden aria-hidden="true">
+    <div class="setup-card" role="dialog" aria-modal="true" aria-labelledby="wizardTitle" tabindex="-1">
+      <div class="setup-brand"><span class="brand-mark">BL</span><div><strong>Business Ledger</strong><span class="hint">One-time setup</span></div></div>
+      <h1 id="wizardTitle">Set up your workspace</h1>
+      <p class="hint">Your data stays on this computer in the browser. No account required.</p>
+      <div class="form-grid">
+        <label class="wide">Workspace name
+          <input id="wizardWorkspaceName" type="text" maxlength="80" placeholder="e.g. My side businesses" value="My Workspace">
+        </label>
+        <div class="form-cluster cluster-2">
+          <label>Currency
+            <select id="wizardCurrency">
+              <option value="ZAR" selected>ZAR (South Africa)</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </label>
+          <label>VAT registered?
+            <select id="wizardVat">
+              <option value="no" selected>No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <label class="wide wizard-feature">
+        <input type="checkbox" id="wizardShowListings">
+        <span><strong>Show Listings tab</strong><span class="hint">For online stores or digital product listings. Leave off if you do not sell online — you can turn it on later in Settings.</span></span>
+      </label>
+      <h2 class="wizard-sub">Businesses</h2>
+      <p class="hint">Add at least one business. You can change colours and details later in Settings.</p>
+      <div id="wizardBusinessList" class="wizard-biz-list"></div>
+      <div class="form-cluster cluster-3 wizard-add-row">
+        <label>Name<input id="wizardBizName" type="text" maxlength="80" placeholder="Business name"></label>
+        <label>Type<input id="wizardBizType" type="text" maxlength="80" placeholder="e.g. Consulting"></label>
+        <label>Colour<input id="wizardBizColor" type="color" value="#1f5fbf"></label>
+      </div>
+      <div class="wizard-actions">
+        <button type="button" class="ghost" id="wizardAddBusiness">Add business</button>
+        <button type="button" class="primary" id="wizardFinish">Start using Business Ledger</button>
+      </div>
+      <p class="hint wizard-demo">Or <button type="button" class="linkish" id="wizardLoadSample">load clearable sample data</button> to explore first.</p>
+    </div>
+  </div>
+
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <a class="brand" href="#dashboard" data-view-link="dashboard" aria-label="Open dashboard">
+        <span class="brand-mark">BL</span>
+        <span><strong>Business Ledger</strong><small>Business books</small></span>
+      </a>
+      <label class="business-switch">
+        <span>Business</span>
+        <select id="businessFilter"></select>
+      </label>
+      <nav class="side-nav" aria-label="Accounting sections" id="sideNav"></nav>
+      <div class="sidebar-note" id="sidebarVatNote">
+        <strong>No VAT added</strong>
+        <span>Default for non-VAT setups. Export backups regularly.</span>
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <header class="topbar">
+        <div>
+          <span class="micro">South Africa tax year: 1 Mar to 28/29 Feb</span>
+          <h1 id="viewTitle">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <label class="period-control">
+            <span class="micro">Period</span>
+            <select id="periodFilter">
+              <option value="this-month">This month</option>
+              <option value="last-month">Last month</option>
+              <option value="tax-year">This tax year</option>
+              <option value="all">All time</option>
+            </select>
+          </label>
+          <button class="primary" id="exportJson" type="button" title="Download a full JSON backup of your books">Export backup</button>
+          <label class="ghost file-trigger">Import backup<input id="importJson" type="file" accept="application/json"></label>
+        </div>
+      </header>
+
+      <section class="month-alert backup-alert" id="backupAlert" hidden>
+        <div>
+          <strong>Backup reminder</strong>
+          <span id="backupAlertDetail">Export a JSON backup and keep it with your business records.</span>
+        </div>
+        <button type="button" class="ghost" id="dismissBackupAlert">Dismiss</button>
+      </section>
+
+      <section class="month-alert" id="monthAlert" hidden>
+        <div>
+          <strong>Listings check-in</strong>
+          <span>Review digital asset listings if you use the Listings tab.</span>
+        </div>
+        <button type="button" id="goAssets">Review listings</button>
+      </section>
+
+      <section class="view active" id="dashboard">
+        <div class="hero-panel">
+          <div>
+            <span class="micro">Books overview</span>
+            <h2>Keep the books for every business in one place.</h2>
+            <p>Filter by business and period to see profit, cash movement, and what still needs attention.</p>
+          </div>
+          <div class="hero-stats">
+            <div><span>Net profit</span><strong id="dashProfit">R0</strong></div>
+            <div><span>Income</span><strong id="dashIncome">R0</strong></div>
+            <div><span>Expenses</span><strong id="dashExpenses">R0</strong></div>
+          </div>
+        </div>
+
+        <div class="welcome-banner" id="dashWelcome">
+          <strong>Welcome — you are ready to bookkeep</strong>
+          <span class="hint">Add a money record, create an invoice, or tick off a checklist item. Export a backup from the top bar when you have real data.</span>
+        </div>
+
+        <div class="metric-grid">
+          <article><span>Unpaid invoices</span><strong id="dashInvoices">0</strong></article>
+          <article><span>Unpaid amount</span><strong id="dashUnpaidAmount">R0</strong></article>
+          <article><span>Money records</span><strong id="dashTxnCount">0</strong></article>
+          <article id="dashQuotesCard"><span>Open quotes</span><strong id="dashQuotes">0</strong></article>
+        </div>
+
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head"><h3>Business Snapshot</h3><button class="ghost small" data-view-link="reports">Reports</button></div>
+            <div class="business-list" id="businessSnapshot"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Recent Money Records</h3><button class="ghost small" data-view-link="transactions">Add money record</button></div>
+            <div class="record-list" id="recentRecords"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="transactions">
+        <div class="section-layout">
+          <form class="panel form-panel" id="transactionForm">
+            <div class="panel-head">
+              <h3 id="transactionFormTitle">Add Income or Expense</h3>
+              <button type="button" class="ghost small" id="cancelTransactionEdit" hidden>Cancel edit</button>
+            </div>
+            <input type="hidden" name="id" value="">
+            <div class="form-grid">
+              <div class="form-cluster cluster-3">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Type<select name="type" required><option value="income">Income</option><option value="expense">Expense</option></select></label>
+                <label>Date<input name="date" type="date" required></label>
+              </div>
+              <div class="form-cluster cluster-3">
+                <label>Amount<input name="amount" type="number" min="0" step="0.01" required inputmode="decimal" placeholder="0.00"></label>
+                <label>Category<select name="category" required></select></label>
+                <label>Paid by / received via<input name="method" placeholder="Bank, cash, card, PayFast"></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Description<input name="description" placeholder="What was this for?" required></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Receipt or invoice file<input name="attachment" type="file"></label>
+                <p class="hint wide" id="attachmentHint" hidden></p>
+              </div>
+            </div>
+            <button class="primary" id="transactionSubmit">Save record</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Money Records</h3>
+              <div class="panel-tools">
+                <label class="inline-filter">Type
+                  <select id="transactionTypeFilter">
+                    <option value="all">All</option>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                  </select>
+                </label>
+                <label class="inline-filter">Search
+                  <input class="search-input" id="transactionSearch" type="search" placeholder="Description or category">
+                </label>
+                <button class="ghost small" id="exportTransactions">Export CSV</button>
+              </div>
+            </div>
+            <div class="table-wrap"><table><thead><tr><th>Date</th><th>Business</th><th>Type</th><th>Category</th><th>Description</th><th class="num">Amount</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="invoices">
+        <div class="section-layout">
+          <form class="panel form-panel" id="invoiceForm">
+            <div class="panel-head"><h3>Create Invoice</h3><span class="pill">Manual or from quotes</span></div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Invoice date<input name="date" type="date" required></label>
+              </div>
+              <div class="form-cluster cluster-3">
+                <label>Client name<input name="clientName" required></label>
+                <label>Client email<input name="clientEmail" type="email" placeholder="name@example.com"></label>
+                <label>Due date<input name="dueDate" type="date" required></label>
+              </div>
+              <div class="form-cluster">
+                <label>Status<select name="status"><option>Unpaid</option><option>Paid</option><option>Overdue</option><option>Cancelled</option></select></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Notes<textarea name="notes" rows="3" placeholder="Payment terms, bank details, project reference"></textarea></label>
+                <label class="wide">Line items<textarea name="items" rows="5" placeholder="Website design | 3990&#10;Optional support setup | 499" required></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save invoice</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Invoices</h3>
+              <span class="hint" id="invoiceUnpaidSummary">Unpaid: R0</span>
+            </div>
+            <div class="record-list" id="invoiceList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="reports">
+        <div class="tax-header">
+          <div>
+            <span class="micro">Books and tax helpers</span>
+            <h2>Reports</h2>
+            <p>Profit and loss for the selected period, plus a South African tax-year summary for ITR12 preparation. Helper only — not tax advice.</p>
+          </div>
+          <label>Assessment year<select id="taxYear"></select></label>
+        </div>
+        <div class="metric-grid tax-metrics">
+          <article><span>Period income</span><strong id="reportIncome">R0</strong></article>
+          <article><span>Period expenses</span><strong id="reportExpenses">R0</strong></article>
+          <article><span>Period profit / loss</span><strong id="reportProfit">R0</strong></article>
+          <article><span>Records with files</span><strong id="reportFiles">0</strong></article>
+        </div>
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head"><h3>Profit &amp; Loss by Business</h3><span class="hint" id="reportPeriodLabel">This month</span></div>
+            <div class="table-wrap"><table><thead><tr><th>Business / trade</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Profit</th></tr></thead><tbody id="reportBusinessRows"></tbody></table></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Expense Categories</h3><span class="hint">Selected period</span></div>
+            <div class="table-wrap"><table><thead><tr><th>Category</th><th class="num">Amount</th></tr></thead><tbody id="reportCategoryRows"></tbody></table></div>
+          </section>
+        </div>
+        <section class="panel tax-notes">
+          <div class="panel-head">
+            <h3>Tax year helper (ITR12)</h3>
+            <button class="ghost small" id="exportTaxCsv">Export tax CSV</button>
+          </div>
+          <div class="metric-grid tax-metrics compact-metrics">
+            <article><span>Tax-year turnover</span><strong id="taxIncome">R0</strong></article>
+            <article><span>Tax-year expenses</span><strong id="taxExpenses">R0</strong></article>
+            <article><span>Tax-year profit / loss</span><strong id="taxProfit">R0</strong></article>
+            <article><span>Files attached</span><strong id="taxFiles">0</strong></article>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Business / trade</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Profit</th></tr></thead><tbody id="taxBusinessRows"></tbody></table></div>
+          <h3 class="checklist-title">SARS return checklist</h3>
+          <ul>
+            <li>Keep business/trade name separate for each income stream where practical.</li>
+            <li>Keep source documents for income received and expenses claimed.</li>
+            <li>Use the exported CSV with your receipts, bank statements and invoices when preparing your ITR12.</li>
+            <li id="taxVatNote">VAT is excluded when you are not VAT registered (default). Change this in Settings if needed.</li>
+          </ul>
+        </section>
+      </section>
+
+      <section class="view" id="todos">
+        <div class="section-layout single">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Recurring to-dos</h3>
+                <span class="hint" id="todoSummary">Daily 0/0 · Weekly 0/0 · Monthly 0/0</span>
+              </div>
+              <span class="pill">Checklist</span>
+            </div>
+            <p class="hint settings-intro">
+              Tick items off as you finish them. Daily tasks clear each day, weekly tasks clear every Monday,
+              monthly tasks clear at the start of each month.
+            </p>
+            <form class="todo-add-form" id="todoForm">
+              <div class="form-cluster">
+                <label class="todo-text-field">Task
+                  <input name="text" type="text" required maxlength="200" placeholder="e.g. Reconcile bank, review listings, send invoices">
+                </label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Repeat
+                  <select name="cadence" required>
+                    <option value="daily">Every day</option>
+                    <option value="weekly">Every week</option>
+                    <option value="monthly">Every month</option>
+                  </select>
+                </label>
+                <label class="todo-business-field">Business
+                  <select name="businessId" id="todoBusiness" required>
+                    <option value="all">All / general</option>
+                  </select>
+                </label>
+              </div>
+              <button class="primary" type="submit">Add task</button>
+            </form>
+          </section>
+          <div class="todo-columns" id="todoColumns"></div>
+        </div>
+      </section>
+
+      <section class="view" id="settings">
+        <div class="section-layout single">
+          <section class="panel">
+            <div class="panel-head"><h3>Workspace</h3><span class="hint" id="settingsVersion">Version 1.0.0</span></div>
+            <div class="form-cluster cluster-3">
+              <label>Workspace name<input id="workspaceNameInput" type="text" maxlength="80"></label>
+              <label>Currency
+                <select id="currencySelect">
+                  <option value="ZAR">ZAR</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </label>
+              <label>VAT registered?
+                <select id="vatRegisteredSelect">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-cluster cluster-2 listings-setting-row">
+              <label>Listings tab
+                <select id="showListingsSelect" aria-describedby="listingsHint">
+                  <option value="no">Hide (no online store)</option>
+                  <option value="yes">Show (online / digital listings)</option>
+                </select>
+              </label>
+              <p class="hint" id="listingsHint">Optional Business tools tab for marketplace or digital product listings. Off by default.</p>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Businesses</h3></div>
+            <p class="hint settings-intro">Names, types and default income categories feed your books and invoice-to-income posting.</p>
+            <div class="business-settings" id="businessSettings"></div>
+            <div class="form-cluster cluster-3" style="margin-top:1rem">
+              <label>Name<input id="newBusinessName" type="text" placeholder="New business name"></label>
+              <label>Type<input id="newBusinessType" type="text" placeholder="e.g. Retail"></label>
+              <label>Colour<input id="newBusinessColor" type="color" value="#14B8A6"></label>
+            </div>
+            <button type="button" class="primary" id="addBusinessBtn">Add business</button>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h3>Data</h3></div>
+            <p class="hint settings-intro">Sample data is fictional and clearable. Always export a JSON backup before clearing.</p>
+            <div class="wizard-actions">
+              <button type="button" class="ghost" id="loadSampleBtn">Load sample data</button>
+              <button type="button" class="ghost danger" id="clearDataBtn">Clear all local data</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="quotes">
+        <div class="section-layout">
+          <form class="panel form-panel" id="quoteForm">
+            <div class="panel-head"><h3>Create Quote</h3><span class="pill">Any business</span></div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Quote date<input name="date" type="date" required></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Client name<input name="clientName" required></label>
+                <label>Client email<input name="clientEmail" type="email" placeholder="name@example.com"></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Package / title<input name="packageName" placeholder="Custom project, package name"></label>
+                <label>Status<select name="status"><option>Draft</option><option>Sent</option><option>Accepted</option><option>Declined</option></select></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Scope / notes<textarea name="notes" rows="4" placeholder="Pages, features, payment terms, timeline"></textarea></label>
+                <label class="wide">Line items<textarea name="items" rows="5" placeholder="Website design | 3990&#10;Optional support | 499"></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save quote</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head"><h3>Quotes</h3><span class="hint">Accepted quotes can become invoices.</span></div>
+            <div class="record-list quote-list" id="quoteList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="projects">
+        <div class="section-layout">
+          <form class="panel form-panel" id="projectForm">
+            <div class="panel-head"><h3>Project</h3><span class="pill">Pipeline tracker</span></div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Client<input name="clientName" required></label>
+                <label>Business<select name="businessId" required></select></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Package<input name="packageName" placeholder="Package or project name"></label>
+                <label>Project value<input name="value" type="number" min="0" step="0.01" placeholder="0.00"></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Status<select name="status"><option>Lead</option><option>Quoted</option><option>Accepted</option><option>In progress</option><option>Waiting on client</option><option>Ready to launch</option><option>Complete</option></select></label>
+                <label>Next action date<input name="nextAction" type="date"></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Notes<textarea name="notes" rows="4" placeholder="Requirements, content needed, design notes"></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save project</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head"><h3>Project Pipeline</h3></div>
+            <div class="kanban" id="projectBoard"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="orders">
+        <div class="section-layout">
+          <form class="panel form-panel" id="orderForm">
+            <div class="panel-head"><h3>Customer Order</h3><span class="pill">Any business</span></div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Date<input name="date" type="date" required></label>
+              </div>
+              <div class="form-cluster cluster-3">
+                <label>Customer name<input name="customerName" required></label>
+                <label>Phone<input name="phone" placeholder="0xx xxx xxxx"></label>
+                <label>Email<input name="email" type="email" placeholder="name@example.com"></label>
+              </div>
+              <div class="form-cluster cluster-3">
+                <label>Quantity<input name="quantity" type="number" min="1" step="1" value="1"></label>
+                <label>Product<input name="product" placeholder="Product or service"></label>
+                <label>Total<input name="total" type="number" min="0" step="0.01" placeholder="0.00"></label>
+              </div>
+              <div class="form-cluster">
+                <label>Status<select name="status"><option>New</option><option>Confirmed</option><option>Paid</option><option>In production</option><option>Ready</option><option>Collected</option><option>Shipped</option><option>Cancelled</option></select></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Notes<textarea name="notes" rows="3" placeholder="Pickup time, delivery address, custom requirements"></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save order</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head"><h3>Orders and Contacts</h3><button class="ghost small" id="exportOrders">Export CSV</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Date</th><th>Business</th><th>Customer</th><th>Product</th><th>Qty</th><th>Status</th><th class="num">Total</th><th></th></tr></thead><tbody id="orderRows"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="suppliers">
+        <div class="section-layout">
+          <form class="panel form-panel" id="supplierForm">
+            <div class="panel-head"><h3>Supplier Record</h3><span class="pill">Any business</span></div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Supplier name<input name="name" required></label>
+              </div>
+              <div class="form-cluster cluster-3">
+                <label>Contact person<input name="contact"></label>
+                <label>Email<input name="email" type="email" placeholder="name@example.com"></label>
+                <label>Phone<input name="phone" placeholder="0xx xxx xxxx"></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Service<select name="service"><option>Printing</option><option>Binding</option><option>Paper</option><option>Packaging</option><option>Courier</option><option>Other</option></select></label>
+                <label>Last quote amount<input name="lastQuote" type="number" min="0" step="0.01" placeholder="0.00"></label>
+              </div>
+              <div class="form-cluster">
+                <label>Invoice file<input name="attachment" type="file"></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Notes<textarea name="notes" rows="4" placeholder="MOQ, lead time, delivery"></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save supplier</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head"><h3>Suppliers</h3></div>
+            <div class="record-list" id="supplierList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="assets">
+        <div class="section-layout">
+          <form class="panel form-panel" id="assetForm">
+            <div class="panel-head">
+              <h3>Digital Asset Listing</h3>
+              <button type="button" class="ghost small" id="markAssetsReviewed">Mark month reviewed</button>
+            </div>
+            <div class="form-grid">
+              <div class="form-cluster cluster-2">
+                <label>Business<select name="businessId" required></select></label>
+                <label>Platform<input name="platform" placeholder="Etsy, Gumroad, Shopify" required></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Asset name<input name="assetName" placeholder="Product or listing name" required></label>
+                <label>Listing URL<input name="url" type="url" placeholder="https://"></label>
+              </div>
+              <div class="form-cluster cluster-2">
+                <label>Price<input name="price" type="number" min="0" step="0.01" placeholder="0.00"></label>
+                <label>Last updated<input name="lastUpdated" type="date" required></label>
+              </div>
+              <div class="form-cluster">
+                <label>Status<select name="status"><option>Draft</option><option>Listed</option><option>Needs update</option><option>Paused</option></select></label>
+              </div>
+              <div class="form-cluster">
+                <label class="wide">Notes<textarea name="notes" rows="4" placeholder="Sales notes, listing changes"></textarea></label>
+              </div>
+            </div>
+            <button class="primary">Save listing</button>
+          </form>
+          <section class="panel">
+            <div class="panel-head"><h3>Listings</h3></div>
+            <div class="record-list" id="assetList"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

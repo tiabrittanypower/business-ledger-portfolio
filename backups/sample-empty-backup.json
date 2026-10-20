@@ -1,0 +1,30 @@
+{
+  "transactions": [],
+  "quotes": [],
+  "invoices": [],
+  "projects": [],
+  "orders": [],
+  "suppliers": [],
+  "todos": [],
+  "assets": [],
+  "settings": {
+    "setupComplete": true,
+    "workspaceName": "Sample Workspace",
+    "currency": "ZAR",
+    "vatRegistered": false,
+    "period": "this-month",
+    "lastAssetReview": "",
+    "lastBackupAt": "",
+    "businesses": {
+      "demo-biz": {
+        "id": "demo-biz",
+        "name": "Demo Business",
+        "type": "Services",
+        "defaultIncome": "Service income",
+        "trade": "Local business/trade income",
+        "color": "#1f5fbf",
+        "logo": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+node_modules/
+.DS_Store
+backups/business-ledger-backup-*.json
+!backups/sample-empty-backup.json
+!backups/EXPORT-TEST-RESULT.md
+
+# added 2026-10-20
+dist/
+*.bak-*
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+
+# personal data / private ops (keep local, never commit)
+backups/business-ledger-backup-*.json
+docs/marketing/brand-kit/scheduled-posts/
+playwright-report/
+test-results/
