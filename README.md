@@ -81,4 +81,4 @@ Not a hosted/multi-user product, no bank feeds, and not tax advice. Single-brows
 
 ## Licence
 
-Proprietary — see [LICENSE.txt](LICENSE.txt). Source is public for portfolio review only.
+Proprietary — see [LICENSE.txt](LICENSE.txt). The source is public **for portfolio and hiring review only**. To use Business Ledger for your own books, buy it on Gumroad.

@@ -10,6 +10,12 @@ You may:
 - Make backup copies for your own archival purposes
 - Update the software with official release files you receive
 
+Evaluation: anyone may view the source code in this public repository for the
+purpose of evaluating the author's work (for example, portfolio or hiring
+review). This does not grant any right to run the software in production,
+copy it, redistribute it, or use it commercially; those rights require a
+purchase.
+
 You may not:
 - Redistribute, resell, sublicense, or share the software with others
 - Publish the source or a modified version as a competing product
