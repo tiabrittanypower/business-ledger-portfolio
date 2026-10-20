@@ -38,8 +38,8 @@ _Demo GIF / live demo link: **TODO**_
 No install required:
 
 ```bash
-git clone https://github.com/tiabrittanypower/business-ledger.git
-cd business-ledger
+git clone https://github.com/tiabrittanypower/business-ledger-portfolio.git
+cd business-ledger-portfolio
 # either open index.html in Chrome/Edge, or serve the folder:
 python3 -m http.server 8080   # then visit http://localhost:8080
 ```
